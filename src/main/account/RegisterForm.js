@@ -5,7 +5,6 @@ import {logoLight} from "../../assets/images";
 import authApi from "../../api/authApi/exportAuthApi";
 
 const Register = () => {
-    // ============= Initial State Start here =============
     const [clientName, setClientName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -13,18 +12,14 @@ const Register = () => {
     const [gender, setgender] = useState("");
     const [dateOfBirth, setdateOfBirth] = useState("");
     const [checked, setChecked] = useState(false);
-    // ============= Initial State End here ===============
-    // ============= Error Msg Start here =================
     const [errClientName, setErrClientName] = useState("");
     const [errEmail, setErrEmail] = useState("");
     const [errPhone, setErrPhone] = useState("");
     const [errPassword, setErrPassword] = useState("");
     const [errgender, setErrgender] = useState("");
     const [errdateOfBirth, setErrdateOfBirth] = useState("");
-    // ============= Error Msg End here ===================
     const [successMsg, setSuccessMsg] = useState("");
     const navigate = useNavigate();
-    // ============= Event Handler Start here =============
     const handleName = (e) => {
         setClientName(e.target.value);
         setErrClientName("");
@@ -49,15 +44,11 @@ const Register = () => {
         setdateOfBirth(e.target.value);
         setErrdateOfBirth("");
     };
-    // ============= Event Handler End here ===============
-    // ================= Email Validation start here =============
     const EmailValidation = (email) => {
         return String(email)
             .toLowerCase()
             .match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
     };
-    // ================= Email Validation End here ===============
-
     const handleSignUp = (e) => {
         e.preventDefault();
         if (checked) {
