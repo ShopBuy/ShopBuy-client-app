@@ -109,9 +109,9 @@ import {IoLogoTiktok} from "react-icons/io5";
                   <input
                     onChange={(e) => setEmailInfo(e.target.value)}
                     value={emailInfo}
-                    className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
+                    className="w-3/4 h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
                     type="text"
-                    placeholder="Insert your email ...*"
+                    placeholder="Insert email ...*"
                   />
                   {errMsg && (
                     <p className="text-red-600 text-sm font-semibold font-titleFont text-center animate-bounce mt-2">
@@ -122,7 +122,7 @@ import {IoLogoTiktok} from "react-icons/io5";
 
                 <button
                   onClick={handleSubscription}
-                  className="bg-gray-600 text-white w-[80%] h-8 hover:bg-black hover:text-red-500 duration-300 text-base tracking-wide"
+                  className="bg-gray-600 text-white w-[80%] h-8 hover:bg-black hover:text-red-500 duration-300 text-base tracking-wide "
                 >
                   SUBSCRIBE NOW
                 </button>
