@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 
-  function Login() {
+function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,6 +10,9 @@ import {Link} from "react-router-dom";
   const [errPassword, setErrPassword] = useState("");
 
   const [successMsg, setSuccessMsg] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleEmail = (e) => {
     const inputEmail = e.target.value;
     setEmail(inputEmail);
@@ -17,24 +20,24 @@ import {Link} from "react-router-dom";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(inputEmail)) {
-    setErrEmail("Email is not in correct format !");
+      setErrEmail("Email is not in correct format !");
     } else {
       setErrEmail(" ");
     }
   };
   const handlePassword = (e) => {
-    const inputPassword =  e.target.value;
+    const inputPassword = e.target.value;
     setPassword(inputPassword);
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!passwordRegex.test(inputPassword)) {
-      setErrPassword("Password must be at least 8 characters: uppercase, lowercase, number, special character.");
+      setErrPassword("Password is not in correct format !");
     } else {
       setErrPassword("");
     }
   };
-  const handleSignUp = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -52,92 +55,152 @@ import {Link} from "react-router-dom";
       setPassword("");
     }
   };
+
+  const showPasswordText = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       {successMsg ? (
-        <div className="w-full lgl:w-[500px] h-full flex flex-col justify-center">
+        <div
+          className="w-full lgl:w-[500px] h-full flex flex-col justify-center border border-gray-200 rounded-md shadow-md p-6">
           <p className="w-full px-4 py-10 text-green-500 font-medium font-titleFont">
             {successMsg}
           </p>
           <Link to="/signup">
             <button
               className="w-full h-10 bg-primeColor text-gray-200 rounded-md text-base font-titleFont font-semibold
-            tracking-wide hover:bg-black hover:text-white duration-300"
+          tracking-wide hover:bg-black hover:text-white duration-300"
             > Sign Up
             </button>
           </Link>
         </div>
       ) : (
-        <form className="w-full lgl:w-[450px] h-screen flex items-center justify-center">
+        <form className="w-full lgl:w-[1200px]  flex items-center justify-center">
+
           <div
-            className="px-6 py-4 w-full h-[90%] flex flex-col justify-center overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
-            <h1
-              className="font-titleFont  underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4 text-red-500">
-              LOGIN
-            </h1>
-            <p className="text-gray-600">Log in with your email address and password.
-            </p>
-            <br/>
-            <div className="flex flex-col gap-3">
-              {/* Email */}
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">
-                  Email<span className="text-red-500">*</span>
-                </p>
-                <input
-                  onChange={handleEmail}
-                  value={email}
-                  className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                  type="email"
-                  placeholder="demo@gmail.com"
-                />
-                {errEmail && (
-                  <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                    {errEmail}
-                  </p>
-                )}
-              </div>
-
-              {/* Password */}
-              <div className="flex flex-col gap-.5">
-                <p className="font-titleFont text-base font-semibold text-gray-600">
-                  Password<span className="text-red-500">*</span>
-                </p>
-                <input
-                  onChange={handlePassword}
-                  value={password}
-                  className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                  type="password"
-                  placeholder="Demo123*"
-                />
-                {errPassword && (
-                  <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                    {errPassword} !
-                  </p>
-                )}
-
-              </div>
+            className="grid grid-cols-2 gap-8 w-full h-[90%] p-4 border border-gray-300 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
+            <div className="col-span-1 relative">
+              <h1
+                className="font-titleFont underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4 ">
+                LOGIN
+              </h1>
+              <p className="text-gray-600">Log in with your email address and password.</p>
               <br/>
+              <div className="flex flex-col gap-3">
 
-              <button
-                onClick={handleSignUp}
-                className="bg-black hover:bg-red-600 text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md  duration-300"
-              > Login
-              </button>
-              <p className="text-sm text-center font-titleFont font-medium">
-                Don't have an Account?{" "}
-                <Link to="/signup">
-                    <span className="hover:text-blue-600 duration-300">
-                      Sign up
-                    </span>
-                </Link>
-              </p>
+                {/* Email */}
+                <div className="flex flex-col gap-.5">
+                  <p className="font-titleFont text-base font-semibold text-gray-600">
+                    EMAIL ADDRESS <span className="text-red-500">*</span>
+                  </p>
+                  <input
+                    onChange={handleEmail}
+                    value={email}
+                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal  border-[1px] border-gray-400 outline-none"
+                    type="email"
+                    placeholder="demo@gmail.com"
+                  />
+                  {errEmail && (
+                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
+                      {errEmail}
+                    </p>
+                  )}
+                </div>
+
+                {/* Password */}
+                <div className="flex flex-col gap-.5">
+                  <p className="font-titleFont text-base font-semibold text-gray-600">
+                    PASSWORD <span className="text-red-500">*</span>
+                  </p>
+                  <input
+                    onChange={handlePassword}
+                    value={password}
+                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal  border-[1px] border-gray-400 outline-none"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Demo123*"
+                  />
+                  <p className="text-gray-600">
+                    Password must be at least 8 characters: uppercase, lowercase, number, special character.
+                  </p>
+                  {errPassword && (
+                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
+                      {errPassword}
+                    </p>
+                  )}
+                </div>
+
+
+                <div>
+                  <input type="checkbox"
+                    // id="checkbox"
+                    // className="absolute right-2 top-2 cursor-pointer"
+                         checked={showPassword}
+                         onChange={showPasswordText}/>
+                  <label htmlFor="checkbox"> Show my password</label>
+                </div>
+
+                <p className="text-sm  font-titleFont font-medium">
+                  <Link to="/#">
+                <span className="hover:text-red-500 duration-300">
+                 TERMS OF USE
+                </span>
+                  </Link>
+                </p>
+
+                <p className="text-sm  font-titleFont font-medium">
+                  <Link to="/#">
+                <span className="hover:text-red-500 duration-300">
+                 PRIVACY POLICY
+                </span>
+                  </Link>
+                </p>
+
+                <button
+                  onClick={handleLogin}
+                  className="bg-black hover:bg-red-600 text-white hover:text-white cursor-pointer w-1/2 text-base font-medium h-10 duration-300"
+                > LOG IN
+                </button>
+
+                <p className="text-sm  font-titleFont font-medium">
+                  <Link to="/#">
+                <span className="hover:text-red-500 duration-300">
+                 FORGOT YOUR PASSWORD?
+                </span>
+                  </Link>
+                </p>
+              </div>
             </div>
+            <div className="col-span-1 relative">
+              <div className="border-r border-gray-400 h-full absolute left-0 top-0"></div>
+              <h1
+                className="font-titleFont underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4 ml-4 ">
+                CREATE AN ACCOUNT
+              </h1>
+              <p className="text-gray-600 ml-4 ">
+                If you create an account, you can get personalized services like checking purchase history and getting
+                discount coupons with your membership. Register today for free!
+              </p><br/>
+
+              <Link to="/signup">
+                <button
+                  className="bg-black hover:bg-red-600 text-white hover:text-white cursor-pointer w-1/2 text-base font-medium h-10 duration-300 ml-4"
+                > CREATE AN ACCOUNT
+                </button>
+              </Link>
+            </div>
+
           </div>
         </form>
+
+
       )}
     </div>
+
+
   );
 };
+
 
 export default Login;
