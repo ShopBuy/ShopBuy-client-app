@@ -242,6 +242,7 @@ function Header() {
           >
             <span className="cursor-pointer font-semibold text-gray-700 hover:text-red-500 ">
 
+                {/*trang user*/}
               <Link to="/#">
                 <BiUser className="text-black hover:text-red-500" style={{fontSize: "25px", color: "black"}}></BiUser>
               </Link>
