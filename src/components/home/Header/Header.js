@@ -235,10 +235,8 @@ function Header() {
 
         <div className="flex items-center">
           {/* Account on the right */}
-<<<<<<< HEAD
           <div style={{ marginRight: "10px" }}>
             <Link to="#">
-=======
 
 
           {/*<input*/}
@@ -248,9 +246,7 @@ function Header() {
           {/*    value={inputValue}*/}
           {/*    onChange={handleChange}*/}
           {/*/>*/}
-          <div style={{ marginRight: "1px" }}>
-            <Link to="/#">
->>>>>>> 6d3e0bc05172609e501b5da7ba001ebdcc551ee9
+
               <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>
@@ -262,13 +258,9 @@ function Header() {
           >
             <span className="cursor-pointer font-semibold text-gray-700 hover:text-red-500 ">
 
-<<<<<<< HEAD
               <Link to="/login">
-=======
 
                 {/*trang user*/}
-              <Link to="/#">
->>>>>>> 6d3e0bc05172609e501b5da7ba001ebdcc551ee9
                 <BiUser className="text-black hover:text-red-500" style={{fontSize: "25px", color: "black"}}></BiUser>
               </Link>
             </span>
@@ -302,7 +294,7 @@ function Header() {
                   </li>
                 </Link>
 
-                <Link to="#">
+                <Link to="/password-profile">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Password
