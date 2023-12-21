@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Image from "../../../designLayouts/Image";
 import {logo} from "../../../assets/images";
 import {motion} from "framer-motion";
@@ -12,11 +12,18 @@ function Header() {
   const [showWomen, setShowWomen] = useState(false);
   const [showMen, setShowMen] = useState(false);
   const [showKids, setShowKids] = useState(false);
-
-
   const [showPages, setShowPages] = useState(false);
-
   const [showAccount, setShowAccount] = useState(false);
+  // const [inputValue, setInputValue] = useState('');
+  // const navigate = useNavigate();
+  // const handleChange = (e) => {
+  //   const newValue = e.target.value;
+  //   setInputValue(newValue);
+  //
+  //   // Thay đổi route mỗi khi giá trị input thay đổi
+  //   navigate(`/search?q=${newValue}`);
+  // };
+// loi
 
   const handleWomenMouseEnter = () => {
     setShowWomen(true);
@@ -228,12 +235,20 @@ function Header() {
 
         <div className="flex items-center">
           {/* Account on the right */}
-          <div style={{ marginRight: "10px" }}>
+
+
+          {/*<input*/}
+          {/*    type="text"*/}
+          {/*    className="text search-input font-size-12"*/}
+          {/*    placeholder="Type here to search..."*/}
+          {/*    value={inputValue}*/}
+          {/*    onChange={handleChange}*/}
+          {/*/>*/}
+          <div style={{ marginRight: "1px" }}>
             <Link to="/#">
               <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>
-
           <div
             style={{ marginRight: "15px" }}
             className="relative ml-4"
@@ -242,6 +257,8 @@ function Header() {
           >
             <span className="cursor-pointer font-semibold text-gray-700 hover:text-red-500 ">
 
+
+                {/*trang user*/}
               <Link to="/#">
                 <BiUser className="text-black hover:text-red-500" style={{fontSize: "25px", color: "black"}}></BiUser>
               </Link>
@@ -262,7 +279,7 @@ function Header() {
                   </li>
                 </Link>
 
-                <Link onClick={() => setShowAccount(false)} to="/#">
+                <Link onClick={() => setShowAccount(false)} to="/signup">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Signup
