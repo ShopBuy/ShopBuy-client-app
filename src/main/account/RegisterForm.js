@@ -81,10 +81,11 @@ const Register = () => {
             if (!dateOfBirth) {
                 setErrdateOfBirth("Enter the dateOfBirth you are residing");
             }
+            fetchRegister();
             // ============== Getting the value ==============
-            if (clientName && email && EmailValidation(email) && password && password.length >= 6 && gender && phone && dateOfBirth) {
-                fetchRegister();
-            }
+            // if (clientName && email && EmailValidation(email) && password && password.length >= 6 && gender && phone && dateOfBirth) {
+            //     fetchRegister();
+            // }
         }
     };
     const fetchRegister = async () => {
@@ -99,7 +100,7 @@ const Register = () => {
         };
         try {
             const response = await authApi.register(userData);
-            if (response && response.status === 200) {
+            if (response.data != null) {
                 console.log("Registration successful:", response.data);
                 setSuccessMsg(`Hello dear ${clientName}, 
           Welcome you to OREBI Admin panel. We received your Sign up request. 
@@ -188,7 +189,7 @@ const Register = () => {
                     <p className="w-full px-4 py-10 text-green-500 font-medium font-titleFont">
                         {successMsg}
                     </p>
-                    <Link to="/signin">
+                    <Link to="/login">
                         <button
                             className="w-full h-10 bg-primeColor rounded-md text-gray-200 text-base font-titleFont font-semibold
             tracking-wide hover:bg-black hover:text-white duration-300"
@@ -333,7 +334,7 @@ const Register = () => {
                             </button>
                             <p className="text-sm text-center font-titleFont font-medium">
                                 Don't have an Account?{" "}
-                                <Link to="/signin">
+                                <Link to="/login">
                     <span className="hover:text-blue-600 duration-300">
                       Sign in
                     </span>

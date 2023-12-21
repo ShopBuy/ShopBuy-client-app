@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Image from "../../../designLayouts/Image";
 import {logo} from "../../../assets/images";
 import {motion} from "framer-motion";
@@ -12,11 +12,18 @@ function Header() {
   const [showWomen, setShowWomen] = useState(false);
   const [showMen, setShowMen] = useState(false);
   const [showKids, setShowKids] = useState(false);
-
-
   const [showPages, setShowPages] = useState(false);
-
   const [showAccount, setShowAccount] = useState(false);
+  // const [inputValue, setInputValue] = useState('');
+  // const navigate = useNavigate();
+  // const handleChange = (e) => {
+  //   const newValue = e.target.value;
+  //   setInputValue(newValue);
+  //
+  //   // Thay đổi route mỗi khi giá trị input thay đổi
+  //   navigate(`/search?q=${newValue}`);
+  // };
+// loi
 
   const handleWomenMouseEnter = () => {
     setShowWomen(true);
@@ -228,12 +235,25 @@ function Header() {
 
         <div className="flex items-center">
           {/* Account on the right */}
+<<<<<<< HEAD
           <div style={{ marginRight: "10px" }}>
             <Link to="#">
+=======
+
+
+          {/*<input*/}
+          {/*    type="text"*/}
+          {/*    className="text search-input font-size-12"*/}
+          {/*    placeholder="Type here to search..."*/}
+          {/*    value={inputValue}*/}
+          {/*    onChange={handleChange}*/}
+          {/*/>*/}
+          <div style={{ marginRight: "1px" }}>
+            <Link to="/#">
+>>>>>>> 6d3e0bc05172609e501b5da7ba001ebdcc551ee9
               <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>
-
           <div
             style={{ marginRight: "15px" }}
             className="relative ml-4"
@@ -242,7 +262,13 @@ function Header() {
           >
             <span className="cursor-pointer font-semibold text-gray-700 hover:text-red-500 ">
 
+<<<<<<< HEAD
               <Link to="/login">
+=======
+
+                {/*trang user*/}
+              <Link to="/#">
+>>>>>>> 6d3e0bc05172609e501b5da7ba001ebdcc551ee9
                 <BiUser className="text-black hover:text-red-500" style={{fontSize: "25px", color: "black"}}></BiUser>
               </Link>
             </span>

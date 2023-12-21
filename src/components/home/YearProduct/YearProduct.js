@@ -26,5 +26,4 @@ const YearProduct = () => {
         </Link>
     );
 };
-
 export default YearProduct;
