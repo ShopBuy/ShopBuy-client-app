@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 
-function ProfilePassword() {
+function PasswordProfile() {
 
 
   return (
@@ -38,7 +38,7 @@ function ProfilePassword() {
 
           <h6 className="text-xs font-semibold mb-2">Profile settings</h6>
           <p className="hover:text-red-500 text-xs  mb-2">
-            <Link to="#">
+            <Link to="/edit-profile">
               <p> Edit profile </p>
             </Link>
           </p>
@@ -57,7 +57,7 @@ function ProfilePassword() {
 
           <p className="hover:text-red-500 text-xs  mb-2">
             <Link to="#">
-              <p className="text-red-500" > Change my password </p>
+              <p className="text-red-500" > Change password </p>
             </Link>
           </p>
 
@@ -71,7 +71,7 @@ function ProfilePassword() {
 
         <div className="w-3/4 pl-4 border-red-500 lg:pl-0 lg:max-w-2xl ">
           <div className="bg-white shadow shadow-red-500 p-6 mb-4 ">
-            <h1 className="text-2xl font-semibold mb-4">CHANGE MY PASSWORD</h1> <br/>
+            <h1 className="text-2xl font-semibold mb-4">CHANGE PASSWORD</h1> <br/>
 
             <div className="flex flex-col">
               <p className="font-titleFont text-base font-semibold">
@@ -143,5 +143,5 @@ function ProfilePassword() {
   );
 }
 
-export default ProfilePassword
+export default PasswordProfile
 

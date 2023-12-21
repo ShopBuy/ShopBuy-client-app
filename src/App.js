@@ -6,6 +6,9 @@ import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
 import Shop from "./pages/Shop/Shop";
 import Login from "./pages/Account/Login";
+import Profile from "./pages/Account/Profile";
+import PasswordProfile from "./pages/Account/PasswordProfile";
+import EditProfile from "./pages/Account/EditProfile";
 
 const Layout = () => {
   return (
@@ -26,6 +29,9 @@ const router = createBrowserRouter(
         <Route index element={<Home/>}></Route>
         <Route path="/signup" element={<SignUp/>}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/password-profile" element={<PasswordProfile />}></Route>
+        <Route path="/edit-profile" element={<EditProfile />}></Route>
       </Route>
     </Route>
   )
