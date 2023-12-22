@@ -80,7 +80,7 @@ function Login() {
         <form className="w-full lgl:w-[1200px]  flex items-center justify-center">
 
           <div
-            className="grid grid-cols-2 gap-8 w-full h-[90%] p-4 border border-gray-300 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
+            className="grid grid-cols-2 gap-8 w-full h-[100%] p-4 border border-red-500 shadow-md overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
             <div className="col-span-1 relative">
               <h1
                 className="font-titleFont underline-offset-4 decoration-[1px] font-semibold text-3xl mdl:text-4xl mb-4 ">
@@ -95,13 +95,15 @@ function Login() {
                   <p className="font-titleFont text-base font-semibold text-gray-600">
                     EMAIL ADDRESS <span className="text-red-500">*</span>
                   </p>
+
                   <input
                     onChange={handleEmail}
                     value={email}
-                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal  border-[1px] border-gray-400 outline-none"
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
                     type="email"
                     placeholder="demo@gmail.com"
                   />
+
                   {errEmail && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
                       {errEmail}
@@ -117,11 +119,11 @@ function Login() {
                   <input
                     onChange={handlePassword}
                     value={password}
-                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal  border-[1px] border-gray-400 outline-none"
+                    className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal  outline-none bg-gray-100 p-2 border-b border-blue-500 "
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Demo123*"
                   />
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-xs  mb-2">
                     Password must be at least 8 characters: uppercase, lowercase, number, special character.
                   </p>
                   {errPassword && (
@@ -134,8 +136,6 @@ function Login() {
 
                 <div>
                   <input type="checkbox"
-                    // id="checkbox"
-                    // className="absolute right-2 top-2 cursor-pointer"
                          checked={showPassword}
                          onChange={showPasswordText}/>
                   <label htmlFor="checkbox"> Show my password</label>
@@ -186,7 +186,7 @@ function Login() {
               <Link to="/signup">
                 <button
                   className="bg-black hover:bg-red-600 text-white hover:text-white cursor-pointer w-1/2 text-base font-medium h-10 duration-300 ml-4"
-                > CREATE AN ACCOUNT
+                > CREATE ACCOUNT
                 </button>
               </Link>
             </div>
