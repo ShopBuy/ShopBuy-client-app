@@ -97,28 +97,28 @@ function Header() {
                 className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
               >
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Women1
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Women2
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Women3
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Women4
@@ -146,28 +146,28 @@ function Header() {
                 className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
               >
 
-                <Link to="/login">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Men1
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Men2
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                    men3
+                    Men3
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Men4
@@ -194,26 +194,26 @@ function Header() {
                 className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
               >
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Kids1
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Kids2
                   </li>
                 </Link>
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Kids3
                   </li>
                 </Link>
-                <Link to="/#">
+                <Link to="#">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Kids4
@@ -235,6 +235,8 @@ function Header() {
 
         <div className="flex items-center">
           {/* Account on the right */}
+          <div style={{ marginRight: "10px" }}>
+            <Link to="#">
 
 
           {/*<input*/}
@@ -244,8 +246,7 @@ function Header() {
           {/*    value={inputValue}*/}
           {/*    onChange={handleChange}*/}
           {/*/>*/}
-          <div style={{ marginRight: "1px" }}>
-            <Link to="/#">
+
               <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>
@@ -257,9 +258,9 @@ function Header() {
           >
             <span className="cursor-pointer font-semibold text-gray-700 hover:text-red-500 ">
 
+              <Link to="/login">
 
                 {/*trang user*/}
-              <Link to="/#">
                 <BiUser className="text-black hover:text-red-500" style={{fontSize: "25px", color: "black"}}></BiUser>
               </Link>
             </span>
@@ -286,14 +287,14 @@ function Header() {
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="/profile">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Profile
                   </li>
                 </Link>
 
-                <Link to="/#">
+                <Link to="/password-profile">
                   <li
                     className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Password
@@ -310,13 +311,13 @@ function Header() {
 
 
           <div style={{ marginRight: "15px" }}>
-            <Link to="/#">
+            <Link to="#">
               <AiOutlineHeart className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>
 
           <div style={{ marginRight: "20px" }}>
-            <Link to="/#">
+            <Link to="#">
               <BsCart3 className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>
