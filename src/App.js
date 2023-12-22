@@ -32,7 +32,6 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<Profile/>}></Route>
         <Route path="/password-profile" element={<PasswordProfile/>}></Route>
         <Route path="/edit-profile" element={<EditProfile/>}></Route>
-        {/*<Route path="/search" element={<Search/>}></Route>*/}
       </Route>
     </Route>
   )

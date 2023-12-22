@@ -14,16 +14,6 @@ function Header() {
   const [showKids, setShowKids] = useState(false);
   const [showPages, setShowPages] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
-  // const [inputValue, setInputValue] = useState('');
-  // const navigate = useNavigate();
-  // const handleChange = (e) => {
-  //   const newValue = e.target.value;
-  //   setInputValue(newValue);
-  //
-  //   // Thay đổi route mỗi khi giá trị input thay đổi
-  //   navigate(`/search?q=${newValue}`);
-  // };
-// loi
 
   const handleWomenMouseEnter = () => {
     setShowWomen(true);
@@ -237,16 +227,6 @@ function Header() {
           {/* Account on the right */}
           <div style={{ marginRight: "10px" }}>
             <Link to="#">
-
-
-          {/*<input*/}
-          {/*    type="text"*/}
-          {/*    className="text search-input font-size-12"*/}
-          {/*    placeholder="Type here to search..."*/}
-          {/*    value={inputValue}*/}
-          {/*    onChange={handleChange}*/}
-          {/*/>*/}
-
               <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
             </Link>
           </div>

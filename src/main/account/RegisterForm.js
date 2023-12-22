@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {BsCheckCircleFill} from "react-icons/bs";
 import {Link, useNavigate} from "react-router-dom";
 import {logoLight} from "../../assets/images";
-import authApi from "../../api/authApi/exportAuthApi";
+import {register} from "../../api/authApi/AuthApi";
 
 const Register = () => {
     const [clientName, setClientName] = useState("");
@@ -82,10 +82,6 @@ const Register = () => {
                 setErrdateOfBirth("Enter the dateOfBirth you are residing");
             }
             fetchRegister();
-            // ============== Getting the value ==============
-            // if (clientName && email && EmailValidation(email) && password && password.length >= 6 && gender && phone && dateOfBirth) {
-            //     fetchRegister();
-            // }
         }
     };
     const fetchRegister = async () => {
@@ -99,7 +95,7 @@ const Register = () => {
             dateOfBirth: dateOfBirth,
         };
         try {
-            const response = await authApi.register(userData);
+            const response = await register(userData);
             if (response.data != null) {
                 console.log("Registration successful:", response.data);
                 setSuccessMsg(`Hello dear ${clientName}, 
