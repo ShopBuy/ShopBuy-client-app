@@ -235,15 +235,6 @@ function Header() {
 
         <div className="flex items-center">
           {/* Account on the right */}
-
-
-          {/*<input*/}
-          {/*    type="text"*/}
-          {/*    className="text search-input font-size-12"*/}
-          {/*    placeholder="Type here to search..."*/}
-          {/*    value={inputValue}*/}
-          {/*    onChange={handleChange}*/}
-          {/*/>*/}
           <div style={{ marginRight: "1px" }}>
             <Link to="/#">
               <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
