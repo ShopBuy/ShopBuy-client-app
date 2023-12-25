@@ -9,46 +9,54 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [gender, setgender] = useState("");
+    const [gender, setGender] = useState(""); // Thêm state cho gender
     const [dateOfBirth, setdateOfBirth] = useState("");
     const [checked, setChecked] = useState(false);
     const [errClientName, setErrClientName] = useState("");
     const [errEmail, setErrEmail] = useState("");
     const [errPhone, setErrPhone] = useState("");
     const [errPassword, setErrPassword] = useState("");
-    const [errgender, setErrgender] = useState("");
+    const [errGender, setErrGender] = useState(""); // Thêm state và cập nhật lỗi khi chọn gender
     const [errdateOfBirth, setErrdateOfBirth] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const navigate = useNavigate();
+
     const handleName = (e) => {
         setClientName(e.target.value);
         setErrClientName("");
     };
+
     const handleEmail = (e) => {
         setEmail(e.target.value);
         setErrEmail("");
     };
+
     const handlePhone = (e) => {
         setPhone(e.target.value);
         setErrPhone("");
     };
+
     const handlePassword = (e) => {
         setPassword(e.target.value);
         setErrPassword("");
     };
-    const handlegender = (e) => {
-        setgender(e.target.value);
-        setErrgender("");
+
+    const handleGender = (e) => {
+        setGender(e.target.value);
+        setErrGender(""); // Thêm state và cập nhật lỗi khi chọn gender
     };
+
     const handledateOfBirth = (e) => {
         setdateOfBirth(e.target.value);
         setErrdateOfBirth("");
     };
+
     const EmailValidation = (email) => {
         return String(email)
             .toLowerCase()
             .match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
     };
+
     const handleSignUp = (e) => {
         e.preventDefault();
         if (checked) {
@@ -68,18 +76,18 @@ const Register = () => {
             if (!password) {
                 setErrPassword("Create a password");
             } else {
-                if (password.length < 6) {
-                    setErrPassword("Passwords must be at least 6 characters");
+                if (password.length < 8) {
+                    setErrPassword("Passwords must be at least 8 characters");
                 }
             }
             if (!gender) {
-                setErrgender("Enter your gender");
+                setErrGender("Select your gender"); // Thêm kiểm tra cho gender
             }
             if (!phone) {
-                setErrPhone("Enter your city name");
+                setErrPhone("Enter your phone number");
             }
             if (!dateOfBirth) {
-                setErrdateOfBirth("Enter the dateOfBirth you are residing");
+                setErrdateOfBirth("Enter the dateOfBirth");
             }
             fetchRegister();
         }
@@ -258,35 +266,41 @@ const Register = () => {
                                 <p className="font-titleFont text-base font-semibold text-gray-600">
                                     GENDER
                                 </p>
-                                <input
-                                    onChange={handlegender}
+                                <select
+                                    onChange={handleGender}
                                     value={gender}
                                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                                    type="text"
-                                    placeholder="Male and Female"
-                                />
-                                {errgender && (
+                                >
+                                    <option value="" disabled>Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                {errGender && (
                                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
                                         <span className="font-bold italic mr-1">!</span>
-                                        {errgender}
-                                    </p>)}
+                                        {errGender}
+                                    </p>
+                                )}
                             </div>
                             {/* City */}
                             <div className="flex flex-col gap-.5">
                                 <p className="font-titleFont text-base font-semibold text-gray-600">
-                                    PHONE NUMBER
+                                     PHONE NUMBER
                                 </p>
                                 <input
                                     onChange={handlePhone}
-                                    value={phone}
+                                     value={phone}
                                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                                    type="number"
+                                    type="tel" // Đổi type thành "tel"
                                     placeholder="Phone Number"
                                 />
-                                {errPhone && (<p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                                    <span className="font-bold italic mr-1">!</span>
-                                    {errPhone}
-                                </p>)}
+                                {errPhone && (
+                                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
+                                <span className="font-bold italic mr-1">!</span>
+                                {errPhone}
+                                </p>
+                                )}
                             </div>
                             {/* dateOfBirth
                  */}
