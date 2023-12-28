@@ -279,7 +279,6 @@ function Header() {
               >
                 {token ? (
                   <>
-                    {/* Hiển thị các liên kết khi có token */}
                     <Link to="/profile">
                       <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                         Profile
@@ -300,7 +299,6 @@ function Header() {
                   </>
                 ) : (
                   <>
-                    {/* Hiển thị các liên kết khi không có token */}
                     <Link to="/login">
                       <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                         Login
