@@ -1,5 +1,9 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function Login() {
 
@@ -12,6 +16,17 @@ function Login() {
   const [successMsg, setSuccessMsg] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
+  // const history = useHistory();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      navigate('/');
+    }
+  })
 
   const handleEmail = (e) => {
     const inputEmail = e.target.value;
@@ -37,28 +52,64 @@ function Login() {
       setErrPassword("");
     }
   };
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async (e) => {
+      e.preventDefault();
 
-    if (!email) {
-      setErrEmail("Enter your email");
-    }
+      if (!email) {
+        setErrEmail("Enter your email");
+      }
 
-    if (!password) {
-      setErrPassword("Enter your password");
+      if (!password) {
+        setErrPassword("Enter your password");
+      }
+      if (email && password) {
+        try {
+          const response = await axios.post('http://localhost:8080/api/auth/login', {
+            // value
+            email: email,
+            password: password
+          });
+
+
+
+          if (response.status === 200) {
+            console.log("Login successful!");
+
+            // Lưu trữ token vào localStorage
+            localStorage.setItem("id", response.data.data.id);
+            localStorage.setItem('token', response.data.data.token);
+            localStorage.setItem("role", response.data.data.role);
+
+            // setSuccessMsg(`Hello dear ${email}`);
+            // setEmail("");
+            // setPassword("");
+
+
+            toast.success( "Login successful!" || response.data.message );
+            setTimeout(() => {
+              toast.dismiss();
+            }, 3000);
+
+            setTimeout(() => {
+              navigate('/');
+            }, 4000);
+
+          } else {
+            toast.error('Login failed. Please check your credentials.');
+          }
+        } catch (error) {
+          console.error('Error during login:', error);
+          toast.error('An error occurred. Please try again later.');
+        }
+      }
     }
-    if (email && password) {
-      setSuccessMsg(
-        `Hello dear ${email}`
-      );
-      setEmail("");
-      setPassword("");
-    }
-  };
+  ;
+
 
   const showPasswordText = () => {
     setShowPassword(!showPassword);
   };
+
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -170,6 +221,7 @@ function Login() {
                 </span>
                   </Link>
                 </p>
+
               </div>
             </div>
             <div className="col-span-1 relative">
@@ -179,7 +231,8 @@ function Login() {
                 CREATE AN ACCOUNT
               </h1>
               <p className="text-gray-600 ml-4 ">
-                If you create an account, you can get personalized services like checking purchase history and getting
+                If you create an account, you can get personalized services like checking purchase history and
+                getting
                 discount coupons with your membership. Register today for free!
               </p><br/>
 
@@ -196,11 +249,23 @@ function Login() {
 
 
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
 
 
   );
-};
+}
+;
 
 
 export default Login;

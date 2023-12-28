@@ -7,13 +7,18 @@ import {BiUser} from "react-icons/bi";
 import {BsCart3} from "react-icons/bs";
 import {AiOutlineHeart} from "react-icons/ai";
 import {IoSearchOutline} from "react-icons/io5";
+import {toast} from "react-toastify";
 
 function Header() {
+  const navigate = useNavigate();
+
   const [showWomen, setShowWomen] = useState(false);
   const [showMen, setShowMen] = useState(false);
   const [showKids, setShowKids] = useState(false);
   const [showPages, setShowPages] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
+
+  const [email, setEmail] = useState("");
 
   const handleWomenMouseEnter = () => {
     setShowWomen(true);
@@ -54,6 +59,25 @@ function Header() {
 
   const handleAccountMouseLeave = () => {
     setShowAccount(false);
+  };
+
+
+
+  const handleLogout = async () => {
+    localStorage.removeItem("email");
+    setEmail(null);
+    localStorage.removeItem("token");
+    // localStorage.removeItem("role");
+    // localStorage.removeItem("id");
+    toast.success( "Log Out successful!" );
+    setTimeout(() => {
+      toast.dismiss();
+    }, 3000);
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 4000);
+
   };
 
   return (
@@ -283,7 +307,12 @@ function Header() {
 
                 <li
                   className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                  <Link
+                    to="/login"
+                    onClick={handleLogout}
+                  >
                   Logout
+                  </Link>
                 </li>
               </motion.ul>
             )}
