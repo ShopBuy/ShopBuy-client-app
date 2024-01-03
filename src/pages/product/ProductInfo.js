@@ -11,7 +11,10 @@ const ProductInfo = ({ productInfo }) => {
             <p className="text-base text-gray-600">{productInfo.description}</p>
             <p className="text-sm">Be the first to leave a review.</p>
             <p className="font-medium text-lg">
-                <span className="font-normal">Colors:</span> {productInfo.color}
+                <span className="font-normal">Colors:</span>
+                {productInfo?.variantListDto?.map((varient) => (
+                    varient?.colorDto.name
+                ))}
             </p>
             <button
                 // onClick={() =>
