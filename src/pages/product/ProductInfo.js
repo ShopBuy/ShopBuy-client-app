@@ -12,8 +12,34 @@ const ProductInfo = ({ productInfo }) => {
             <p className="text-sm">Be the first to leave a review.</p>
             <p className="font-medium text-lg">
                 <span className="font-normal">Colors:</span>
-                {productInfo?.variantListDto?.map((varient) => (
-                    varient?.colorDto.name
+                {productInfo?.variantListDto?.map((variant, index) => (
+                    <div key={index}>
+                        <input
+                            type="checkbox"
+                            id={`colorCheckbox-${index}`}
+                            name="colorOptions"
+                            value={variant?.colorDto.name}
+                        />
+                        <label htmlFor={`colorCheckbox-${index}`}>
+                            {" "+variant?.colorDto.name}
+                        </label>
+                    </div>
+                ))}
+            </p>
+            <p className="font-medium text-lg">
+                <span className="font-normal">Size:</span>
+                {productInfo?.variantListDto?.map((variant, index) => (
+                    <div key={index}>
+                        <input
+                            type="checkbox"
+                            id={`colorCheckbox-${index}`}
+                            name="colorOptions"
+                            value={variant?.sizeDto.name}
+                        />
+                        <label htmlFor={`colorCheckbox-${index}`}>
+                            {" "+variant?.sizeDto.name}
+                        </label>
+                    </div>
                 ))}
             </p>
             <button
