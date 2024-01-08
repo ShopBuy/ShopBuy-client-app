@@ -9,6 +9,7 @@ import Login from "./pages/Account/Login";
 import Profile from "./pages/Account/Profile";
 import PasswordProfile from "./pages/Account/PasswordProfile";
 import EditProfile from "./pages/Account/EditProfile";
+import ProductDetail from "./pages/product/ProductDetail";
 
 const Layout = () => {
   return (
@@ -25,7 +26,7 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<Layout/>}>
         <Route path="/shop" element={<Shop/>}></Route>
-
+        <Route path="/product/:id" element={<ProductDetail/>}></Route>
         <Route index element={<Home/>}></Route>
         <Route path="/signup" element={<SignUp/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
