@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-
 import {findAllProduct} from "../../api/adminApi/AdminApi";
+import '../../assets/admin/admincss.css';
 function AdminProductsList() {
     const [productlist, setProductList] = useState([]); // Corrected to useState
     const [currentPage, setCurrentPage] = useState(0);
@@ -45,10 +44,7 @@ function AdminProductsList() {
     };
     return(
         <div style={{marginLeft : 200, marginRight : 200}}>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
+            {/* Các thẻ <br/> có thể được loại bỏ nếu không cần thiết */}
             <table id="product">
                 <thead>
                 <tr>
@@ -68,8 +64,9 @@ function AdminProductsList() {
                         <td>{product?.name}</td>
                         <td>{product?.price}</td>
                         <td>{product?.stock}</td>
-                        <td style={{width : "50"}}>{product?.description}</td>
+                        <td>{product?.description}</td>
                         <td>{product?.star}</td>
+                        {/* ACTION cột có thể được thêm vào sau */}
                     </tr>
                 ))}
                 </tbody>
