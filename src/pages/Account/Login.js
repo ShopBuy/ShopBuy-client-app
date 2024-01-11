@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import { GoogleLogin } from '@react-oauth/google';
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
-
+import {loginGooglee} from "../../api/authApi/AuthApi";
 
 function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
-
   const [successMsg, setSuccessMsg] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
+  const [focusPass, setFocusPass] = useState(false);
+  const [focusPassNow, setFocusPassNow] = useState(false);
+
+  const [erroLogin, setErrorLogin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -112,6 +114,25 @@ function Login() {
   const showPasswordText = () => {
     setShowPassword(!showPassword);
   };
+  const handleBlurPass = () => {
+    setFocusPass(true)
+    setFocusPassNow(false)
+  }
+
+  const loginGoogle = async (credential) => {
+    const data = await loginGooglee({
+      credential: credential,
+    });
+    if (data === null || data === undefined){
+      setErrorLogin(true);
+    }else if (data?.statusCode === 200){
+      localStorage.setItem("token",data?.data.token);
+      localStorage.setItem("user",JSON.stringify(data?.data));
+      navigate("/");
+    }else {
+      navigate("/login")
+    }
+  }
 
 
   return (
@@ -193,6 +214,24 @@ function Login() {
                          checked={showPassword}
                          onChange={showPasswordText}/>
                   <label htmlFor="checkbox"> Show my password</label>
+                </div>
+                <div>
+                  <GoogleLogin
+                      theme="filled_black"
+                      text="signin_with"
+                      locale={"en"}
+                      cancel_on_tap_outside={true}
+                      onSuccess={credentialResponse => {
+                        if (credentialResponse === null || credentialResponse === undefined){
+                          setErrorLogin(true);
+                          return;
+                        }
+                        loginGoogle(credentialResponse.credential)
+                      }}
+                      onError={() => {
+                        setErrorLogin(true);
+                      }}
+                  />
                 </div>
 
                 <p className="text-sm  font-titleFont font-medium">

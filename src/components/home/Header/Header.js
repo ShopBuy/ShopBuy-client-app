@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useNavigate} from "react-router-dom";
 import Image from "../../../designLayouts/Image";
 import {logo} from "../../../assets/images";
@@ -8,6 +8,9 @@ import {BsCart3} from "react-icons/bs";
 import {AiOutlineHeart} from "react-icons/ai";
 import {IoSearchOutline} from "react-icons/io5";
 import {toast} from "react-toastify";
+import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
+import {paginationItems} from "../../../constants";
+import Search from "../../../pages/Shop/Search";
 
 function Header() {
   const navigate = useNavigate();
@@ -19,7 +22,9 @@ function Header() {
   const [showAccount, setShowAccount] = useState(false);
   const [email, setEmail] = useState("");
 
+
   const token = localStorage.getItem("token");
+
 
   const handleWomenMouseEnter = () => {
     setShowWomen(true);
@@ -252,11 +257,7 @@ function Header() {
 
         <div className="flex items-center">
           {/* Account on the right */}
-          <div style={{ marginRight: "10px" }}>
-            <Link to="#">
-              <IoSearchOutline className="text-black hover:text-red-500" style={{ fontSize: "25px", color: "black" }} />
-            </Link>
-          </div>
+          <Search />
           <div
             style={{ marginRight: "15px" }}
             className="relative ml-4"
