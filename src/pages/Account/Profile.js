@@ -106,6 +106,7 @@ function Profile() {
               </p>
 
               <input
+                readOnly
                 name="email"
                 value={user?.email}
                 className="bg-gray-100 p-2 border-b border-blue-500">
@@ -120,6 +121,7 @@ function Profile() {
                 FULL NAME
               </p>
               <input
+                readOnly
                 name="email"
                 value={user?.fullName}
                 className="bg-gray-100 p-2 border-b border-blue-500">
@@ -133,6 +135,7 @@ function Profile() {
                 BIRTHDAY
               </p>
               <input
+                readOnly
                 name="email"
                 value={user?.dateOfBirth}
                 className="bg-gray-100 p-2 border-b border-blue-500">
@@ -147,6 +150,7 @@ function Profile() {
               </p>
 
               <input
+                readOnly
                 name="email"
                 value={user?.gender}
                 className="bg-gray-100 p-2 border-b border-blue-500">
@@ -160,6 +164,7 @@ function Profile() {
                 MOBILE PHONE
               </p>
               <input
+                readOnly
                 name="email"
                 value={user?.phoneNumber}
                 className="bg-gray-100 p-2 border-b border-blue-500">

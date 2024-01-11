@@ -69,8 +69,7 @@ function Login() {
             email: email,
             password: password
           });
-
-
+          // console.log(response)
 
           if (response.status === 200) {
             console.log("Login successful!");
@@ -96,7 +95,7 @@ function Login() {
 
             setTimeout(() => {
               navigate('/');
-            }, 4000);
+            }, 3500);
 
           } else {
             toast.error('Login failed. Please check your credentials.');
