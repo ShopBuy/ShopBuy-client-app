@@ -1,8 +1,79 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import {SHOPBUY_API} from "../../constants/api";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
-function Profile() {
+function EditProfile() {
+  const [user, setUser] = useState();
   const navigate = useNavigate();
+
+  const fetchUserDetail = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get(
+        `${SHOPBUY_API}/users/profile`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserDetail();
+  }, []);
+
+  const updateUserProfile = async () => {
+    const token = localStorage.getItem("token");
+    try {
+
+      const response = await axios.put(
+        `${SHOPBUY_API}/users/update-profile`,
+        user,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setTimeout(() => {
+        navigate('/profile');
+      }, 2000);
+
+      toast.success(response.data.message || "Update profile successfully !");
+
+      setTimeout(() => {
+        toast.dismiss();
+      }, 2000);
+
+
+    } catch (error) {
+      toast.error(error.response.data.message || "Failed to update profile.");
+      console.error('Error updating user profile:', error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveChanges = () => {
+    updateUserProfile();
+  };
 
   const getProfile = () => {
     navigate("/profile");
@@ -80,43 +151,28 @@ function Profile() {
 
             <div className="flex flex-col">
               <p className="font-titleFont text-base font-semibold">
-                EMAIL ADDRESS
+                FULL NAME
               </p>
               <input
-                // onChange={handleEmail}
-                // value={email}
+                name="fullName"
+                value={user?.fullName}
+                onChange={handleInputChange}
                 className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
-                type="email"
-                placeholder="nguyentien606868@gmail.com"
-              />
-
-            </div>
-            <br/>
-
-            <div className="flex flex-col">
-              <p className="font-titleFont text-base font-semibold">
-                FULL NAME <span className="text-red-500"> *</span>
-              </p>
-              <input
-                // onChange={handleEmail}
-                // value={email}
-                className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
-                // type="email"
-                placeholder="Nguyễn Tiến"
+                type="fullName"
               />
             </div>
             <br/>
 
             <div className="flex flex-col">
               <p className="font-titleFont text-base font-semibold">
-                BIRTHDAY <span className="text-red-500"> *</span>
+                BIRTHDAY
               </p>
               <input
-                // onChange={handleEmail}
-                // value={email}
+                name="dateOfBirth"
+                value={user?.dateOfBirth}
+                onChange={handleInputChange}
                 className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
-                // type="email"
-                placeholder="01/01/1999"
+                type="date"
               />
             </div>
             <br/>
@@ -125,26 +181,29 @@ function Profile() {
               <p className="font-titleFont text-base font-semibold">
                 GENDER
               </p>
-              <input
-                // onChange={handleEmail}
-                // value={email}
-                className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
-                // type="email"
-                placeholder="Male or Female"
-              />
+              <select
+                name="gender"
+                onChange={handleInputChange}
+                className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+              >
+                <option value="" disabled>Select gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
             <br/>
 
             <div className="flex flex-col">
               <p className="font-titleFont text-base font-semibold">
-                MOBILE PHONE<span className="text-red-500"> *</span>
+                MOBILE PHONE
               </p>
               <input
-                // onChange={handleEmail}
-                // value={email}
+                name="phoneNumber"
+                value={user?.phoneNumber}
+                onChange={handleInputChange}
                 className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
-                // type="email"
-                placeholder="0123456789"
+                type="text"
               />
             </div>
             <br/>
@@ -157,12 +216,15 @@ function Profile() {
               </button>
               &nbsp;
               <button
+                type="button"
+                onClick={handleSaveChanges}
                 className="bg-black hover:bg-red-600 text-white hover:text-white cursor-pointer w-1/2 text-base font-medium h-10 duration-300"
-              > UPDATE PROFILE
+              > SAVE
               </button>
             </div>
 
           </div>
+          <ToastContainer/>
         </div>
 
 
@@ -171,4 +233,4 @@ function Profile() {
   );
 }
 
-export default Profile
+export default EditProfile
