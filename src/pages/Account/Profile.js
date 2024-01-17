@@ -4,7 +4,15 @@ import {SHOPBUY_API} from "../../constants/api";
 import axios from "axios";
 
 function Profile() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(
+    {
+      fullName: "",
+      dateOfBirth: "",
+      gender: "",
+      phoneNumber: "",
+      profileImageUrl: "",
+    }
+  );
   const navigate = useNavigate();
 
   const fetchUserDetail = async () => {
@@ -99,6 +107,15 @@ function Profile() {
         <div className="w-3/4 pl-4 border-red-500 lg:pl-0 lg:max-w-2xl ">
           <div className="bg-white shadow shadow-red-500 p-6 mb-4 ">
             <h1 className="text-2xl font-semibold mb-4">PROFILE</h1>
+
+            <div className="flex flex-col items-center  ">
+              <img
+                src={user.profileImageUrl}
+                className="w-[250px] h-[250px] object-cover rounded-full mb-2"
+              />
+            </div>
+            <br/>
+
 
             <div className="flex flex-col">
               <p className="font-titleFont text-base font-semibold">
