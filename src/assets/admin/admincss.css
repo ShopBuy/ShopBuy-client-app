@@ -13,3 +13,10 @@
 #product th {
     background-color: #f2f2f2; /* Màu nền cho tiêu đề bảng */
 }
+.button-container {
+    display: flex;
+    gap: 10px; /* Tạo khoảng cách giữa các phần tử */
+}
+.action-column {
+    text-align: center;
+}

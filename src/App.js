@@ -11,6 +11,8 @@ import PasswordProfile from "./pages/Account/PasswordProfile";
 import EditProfile from "./pages/Account/EditProfile";
 import ProductDetail from "./pages/product/ProductDetail";
 import AdminProductsList from "./dashboard/productAdmin/AdminProductsList";
+import UpdateProductPage from "./dashboard/productAdmin/UpdateProductPage";
+import AddProductPage from "./dashboard/productAdmin/AddProductPage";
 
 const Layout = () => {
     return (
@@ -37,6 +39,8 @@ const router = createBrowserRouter(
 
             </Route>
             <Route path="/admin" element={<AdminProductsList/>}></Route>
+            <Route path="/admin/update/:productId" element={<UpdateProductPage />} />
+            <Route path="/admin/add" element={<AddProductPage />} />
         </Route>
     )
 );

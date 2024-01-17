@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {findAllProduct} from "../../api/adminApi/AdminApi";
+import {deleteProduct, findAllProduct} from "../../api/adminApi/AdminApi";
 import '../../assets/admin/admincss.css';
+import {useNavigate} from "react-router-dom";
+
 function AdminProductsList() {
-    const [productlist, setProductList] = useState([]); // Corrected to useState
+    const [productList, setProductList] = useState([]); // Corrected to useState
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const fetchProductList = async () => {
         try {
@@ -24,8 +26,24 @@ function AdminProductsList() {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    console.log(productlist);
+    console.log(productList);
 
+    const handleDeleteProduct = async (ProductId) => {
+        try {
+            await deleteProduct(ProductId);
+            setProductList(productList.filter(product => product.id !== ProductId));
+        } catch (error) {
+            // Xử lý lỗi tại đây
+            console.error("Error deleting movie: " + error);
+        }
+    };
+
+    const redirectToUpdateProductPage = (productId) => {
+        navigate(`/admin/update/${productId}`);
+    }
+    const redirectToAddProductPage = ()=>{
+        navigate(`/admin/add`);
+    }
 
     const renderPagination = () => {
         return (
@@ -44,7 +62,6 @@ function AdminProductsList() {
     };
     return(
         <div style={{marginLeft : 200, marginRight : 200}}>
-            {/* Các thẻ <br/> có thể được loại bỏ nếu không cần thiết */}
             <table id="product">
                 <thead>
                 <tr>
@@ -58,7 +75,7 @@ function AdminProductsList() {
                 </tr>
                 </thead>
                 <tbody>
-                {productlist?.map((product, index) => (
+                {productList?.map((product, index) => (
                     <tr key={index}>
                         <td>{product?.id}</td>
                         <td>{product?.name}</td>
@@ -66,13 +83,22 @@ function AdminProductsList() {
                         <td>{product?.stock}</td>
                         <td>{product?.description}</td>
                         <td>{product?.star}</td>
-                        {/* ACTION cột có thể được thêm vào sau */}
+                        <td className="action-column">
+                            <div className="button-container">
+                                <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                                <button onClick={() => redirectToUpdateProductPage(product.id)}>Update</button>
+                            </div>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
             {renderPagination()}
+            <div>
+                <button type="button" className="submit-button" onClick={redirectToAddProductPage}>ADD Product</button>
+            </div>
         </div>
+
     );
 }
 export default AdminProductsList;
