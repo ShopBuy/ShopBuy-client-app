@@ -25,3 +25,14 @@ export const findProductsById = async (id) => {
     }
     return result?.data;
 };
+export const findAllCategory = async () => {
+    let result = null;
+    try {
+        result = await axios.get(`${PRODUCT_API}category/all`, {
+            headers: { }
+        });
+    } catch (e) {
+        console.log("Find books API error: " + e);
+    }
+    return result?.data;
+};
