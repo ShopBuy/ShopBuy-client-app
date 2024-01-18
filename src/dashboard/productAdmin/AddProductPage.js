@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {fetchCreateNewProduct} from "../../api/adminApi/AdminApi";
-
+import "../../assets/admin/updatecss.css"
+import {findAllCategory} from "../../api/productApi/ProductApi";
 function AddProductPage() {
     const initialProductState = {
         name: '',
@@ -17,6 +18,10 @@ function AddProductPage() {
     };
 
     const [product, setProduct] = useState(initialProductState);
+    const [categoryList, setCategoryList] = useState([]);
+    const [subCategoryList, setSubCategoryList] = useState([]);
+    const [checked, setChecked] = useState();
+    const [subCateChecked, setSubCateChecked] = useState();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,13 +29,54 @@ function AddProductPage() {
     };
 
 
-    const handleCategoryChange = (e) => {
-        setProduct({ ...product, categoryDto: { ...product.categoryDto, [e.target.name]: e.target.value }});
-    };
+    const fetchAllCategoryData = async () =>{
+        try {
+            const response = await findAllCategory();
+            if (response !== null) {
+                setCategoryList(response.data);
+            }
+        } catch (error) {
+            console.error('Failed to fetch Category', error);
+        }
+    }
 
-    const handleSubCategoryChange = (e) => {
-        setProduct({ ...product, subCategoryDto: { ...product.subCategoryDto, [e.target.name]: e.target.value }});
+    const handleCheckedCategory = (id) => {
+        setChecked(id)
+        setProduct({
+            ...product,
+            categoryDto: { id: id }
+        });
+
+        categoryList.forEach((category, index) => {
+            if(category.id == id){
+                setSubCategoryList(category.subCategories);
+            }
+        })
     };
+    const handleCheckedSubCategory = (id) => {
+        // const isChecked = subCategories.includes(id);
+        // if (isChecked) {
+        //     subCategories.map((cate, index) => {
+        //         for (let index = 0; index < subCategories.length; index++) {
+        //             if (subCategories[index] === id) {
+        //                 subCategories.splice(index, 1);
+        //             }
+        //         }
+        //     })
+        // } else {
+        //     subCategories.push(id);
+        //
+        // }
+        // setProduct({
+        //     ...product,
+        //     subCategoryDto: subCategories
+        // });
+        setSubCateChecked(id);
+        setProduct(prevProduct => ({
+            ...prevProduct,
+            subCategoryDto: { id: id }
+        }));
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -40,10 +86,13 @@ function AddProductPage() {
         } catch (error) {
             console.error('Failed to add product:', error);
         }
+        console.log(product)
     };
-
+    useEffect(()=> {
+        fetchAllCategoryData();
+    },[])
     return (
-        <div>
+        <div className="update-product-container">
             <h1>Add Product</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name :  </label>
@@ -85,29 +134,41 @@ function AddProductPage() {
                     value={product.description}
                     onChange={handleChange}
                 />
-                <div>
-                    <h3>Category</h3>
-                    <label htmlFor="categoryName">Name:</label>
-                    <input
-                        type="text"
-                        id="categoryName"
-                        name="name"
-                        value={product.categoryDto.name}
-                        onChange={handleCategoryChange}
-                    />
-                    {/* Add other category fields like gender, isShown, etc. */}
+                <div className="subcategory-section">
+                    <h1>Category :  </h1>
+                    {categoryList?.map((cate, index) => (
+                        <div className="form-check col-sm-4" key={index}>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                defaultValue={cate.id}
+                                id="flexCheckDefault"
+                                onChange={() => handleCheckedCategory(cate.id)}
+                                checked = {checked == cate.id}
+                            />
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                {cate.name}
+                            </label>
+                        </div>
+                    ))}
                 </div>
                 <div>
                     <h3>SubCategory</h3>
-                    <label htmlFor="subCategoryName">Name:</label>
-                    <input
-                        type="text"
-                        id="subCategoryName"
-                        name="name"
-                        value={product.subCategoryDto.name}
-                        onChange={handleSubCategoryChange}
-                    />
-
+                    {subCategoryList?.map((cate, index) => (
+                        <div className="form-check col-sm-4" key={index}>
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                defaultValue={cate.id}
+                                id="flexCheckDefault"
+                                onChange={() => handleCheckedSubCategory(cate.id)}
+                                checked = {subCateChecked == cate.id}
+                            />
+                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                 {cate.name}
+                            </label>
+                        </div>
+                    ))}
                 </div>
                 <button type="submit" className="submit-button" onClick={handleSubmit}>Add Product</button>
             </form>

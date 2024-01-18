@@ -45,11 +45,13 @@ export const findProductsByIdAdmin = async (id) => {
     return result?.data;
 };
 export const fetchCreateNewProduct = async (newMovie) => {
+    let token = localStorage.getItem("token");
     try {
         await axios.post(`${ADMIN_API}create`,newMovie, {
             headers: {
                 Accept: 'application/json',
                 "Content-Type": 'application/json',
+                Authorization: "Bearer " + token
             },
         });
         return true;

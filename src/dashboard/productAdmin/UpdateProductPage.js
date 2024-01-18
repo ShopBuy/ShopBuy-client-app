@@ -185,7 +185,6 @@ function UpdateProductPage() {
                         </div>
                     </>
                     : ""}
-
                 <br/>
 
 
