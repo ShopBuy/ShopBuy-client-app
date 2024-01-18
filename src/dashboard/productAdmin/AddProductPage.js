@@ -3,7 +3,9 @@ import axios from 'axios';
 import {fetchCreateNewProduct} from "../../api/adminApi/AdminApi";
 import "../../assets/admin/updatecss.css"
 import {findAllCategory} from "../../api/productApi/ProductApi";
+import {useNavigate} from "react-router-dom";
 function AddProductPage() {
+    const navigate = useNavigate();
     const initialProductState = {
         name: '',
         price: '',
@@ -54,23 +56,6 @@ function AddProductPage() {
         })
     };
     const handleCheckedSubCategory = (id) => {
-        // const isChecked = subCategories.includes(id);
-        // if (isChecked) {
-        //     subCategories.map((cate, index) => {
-        //         for (let index = 0; index < subCategories.length; index++) {
-        //             if (subCategories[index] === id) {
-        //                 subCategories.splice(index, 1);
-        //             }
-        //         }
-        //     })
-        // } else {
-        //     subCategories.push(id);
-        //
-        // }
-        // setProduct({
-        //     ...product,
-        //     subCategoryDto: subCategories
-        // });
         setSubCateChecked(id);
         setProduct(prevProduct => ({
             ...prevProduct,
@@ -81,6 +66,7 @@ function AddProductPage() {
         e.preventDefault();
         try {
             const response = await fetchCreateNewProduct(product);
+            navigate('/admin');
             console.log('Product added:', response.data);
 
         } catch (error) {
@@ -107,7 +93,7 @@ function AddProductPage() {
                 <br />
                 <label htmlFor="price">Price :  </label>
                 <input
-                    type="text"
+                    type="number"
                     id="price"
                     name="price"
                     className="border"
@@ -117,7 +103,7 @@ function AddProductPage() {
                 <br />
                 <label htmlFor="stock">Stock :  </label>
                 <input
-                    type="text"
+                    type="number"
                     id="stock"
                     name="stock"
                     className="border"
