@@ -1,5 +1,4 @@
 import {useNavigate, useParams} from 'react-router-dom';
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {findProductsByIdAdmin, updateProduct} from "../../api/adminApi/AdminApi";
 import {findAllCategory} from "../../api/productApi/ProductApi";
@@ -117,7 +116,7 @@ function UpdateProductPage() {
                 <br />
                 <label htmlFor="price">Price :  </label>
                 <input
-                    type="text"
+                    type="number"
                     id="price"
                     name="price"
                     className="border"
@@ -127,7 +126,7 @@ function UpdateProductPage() {
                 <br />
                 <label htmlFor="stock">Stock :  </label>
                 <input
-                    type="text"
+                    type="number"
                     id="stock"
                     name="stock"
                     className="border"
