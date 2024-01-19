@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {storage} from "../../config/firebaseConfig";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {Avatar} from "antd";
+import { v4 as uuidv4 } from 'uuid';
 
 function EditProfile() {
     const [user, setUser] = useState(
@@ -110,7 +111,7 @@ function EditProfile() {
 
         console.log("a",imageDefault)
 
-        const imageRef = ref(storage, "image");
+        const imageRef = ref(storage, `image_${uuidv4()}`);
         uploadBytes(imageRef, e.target.files[0]).then(() => {
             getDownloadURL(imageRef).then((url) => {
                  setImage(url)
