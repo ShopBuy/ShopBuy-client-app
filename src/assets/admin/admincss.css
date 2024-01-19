@@ -1,0 +1,22 @@
+#product {
+    table-layout: fixed; /* Đảm bảo rằng tất cả các cột đều có chiều rộng bằng nhau */
+    width: 100%; /* Chiều rộng bảng sẽ được phân chia đều cho tất cả các cột */
+    border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+}
+
+#product th, #product td {
+    text-align: center; /* Căn giữa nội dung theo chiều ngang */
+    vertical-align: middle; /* Căn giữa nội dung theo chiều dọc */
+    padding: 8px; /* Thêm padding để tạo khoảng cách đều */
+}
+
+#product th {
+    background-color: #f2f2f2; /* Màu nền cho tiêu đề bảng */
+}
+.button-container {
+    display: flex;
+    gap: 10px; /* Tạo khoảng cách giữa các phần tử */
+}
+.action-column {
+    text-align: center;
+}

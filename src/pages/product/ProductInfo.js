@@ -12,24 +12,37 @@ const ProductInfo = ({ productInfo }) => {
             <p className="text-sm">Be the first to leave a review.</p>
             <p className="font-medium text-lg">
                 <span className="font-normal">Colors:</span>
-                {productInfo?.variantListDto?.map((varient) => (
-                    varient?.colorDto.name
+                {productInfo?.variantListDto?.map((variant, index) => (
+                    <div key={index}>
+                        <input
+                            type="checkbox"
+                            id={`colorCheckbox-${index}`}
+                            name="colorOptions"
+                            value={variant?.colorDto.name}
+                        />
+                        <label htmlFor={`colorCheckbox-${index}`}>
+                            {" "+variant?.colorDto.name}
+                        </label>
+                    </div>
+                ))}
+            </p>
+            <p className="font-medium text-lg">
+                <span className="font-normal">Size:</span>
+                {productInfo?.variantListDto?.map((variant, index) => (
+                    <div key={index}>
+                        <input
+                            type="checkbox"
+                            id={`colorCheckbox-${index}`}
+                            name="colorOptions"
+                            value={variant?.sizeDto.name}
+                        />
+                        <label htmlFor={`colorCheckbox-${index}`}>
+                            {" "+variant?.sizeDto.name}
+                        </label>
+                    </div>
                 ))}
             </p>
             <button
-                // onClick={() =>
-                //     dispatch(
-                //         addToCart({
-                //             _id: productInfo.id,
-                //             name: productInfo.productName,
-                //             quantity: 1,
-                //             image: productInfo.img,
-                //             badge: productInfo.badge,
-                //             price: productInfo.price,
-                //             colors: productInfo.color,
-                //         })
-                //     )
-                // }
                 className="w-full py-4 bg-primeColor hover:bg-black duration-300 text-white text-lg font-titleFont"
             >
                 Add to Cart
