@@ -45,58 +45,58 @@ function Profile() {
 
       <div className="flex">
         <div className="w-1/4 pr-4 lg:pr-0">
-          <h6 className="text-xs font-semibold mb-2">Membership</h6>
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <h6 className="text-base font-semibold mb-2">Membership</h6>
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="/profile">
               <p className="text-red-500"> Profile </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="#">
               <p> Coupons </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="#">
               <p> Purchase history </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="#">
               <p> Order history </p>
             </Link>
           </p>
 
 
-          <h6 className="text-xs font-semibold mb-2">Profile settings</h6>
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <h6 className="text-base font-semibold mb-2">Profile settings</h6>
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="/edit-profile">
               <p> Edit profile </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="#">
               <p> Address book </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="#">
-              <p> Push notifications and privacy settings </p>
+              <p> Privacy settings </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="/password-profile">
               <p> Change password </p>
             </Link>
           </p>
 
-          <p className="hover:text-red-500 text-xs  mb-2">
+          <p className="hover:text-red-500 text-base  mb-2">
             <Link to="#">
               <p> My cards </p>
             </Link>
