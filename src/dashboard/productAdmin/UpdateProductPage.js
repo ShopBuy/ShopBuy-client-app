@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {findProductsByIdAdmin, updateProduct} from "../../api/adminApi/AdminApi";
 import {findAllCategory} from "../../api/productApi/ProductApi";
 import "../../assets/admin/updatecss.css"
+import {forEach} from "react-bootstrap/ElementChildren";
 function UpdateProductPage() {
     let { productId } = useParams();
     const navigate = useNavigate();
@@ -21,7 +22,12 @@ function UpdateProductPage() {
     });
     const [isShownCategory , setIsShowCategory] = useState(false);
     const [isShownSubCategory , setIsShowSubCategory] = useState(false);
-    const [categoryList, setCategoryList] = useState([]);
+    const [categoryList, setCategoryList] = useState({
+        female : [],
+        male : [],
+        children : []
+    });
+    // const [categoryList, setCategoryList] = useState([]);
     const [subCategoryList, setSubCategoryList] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [checked, setChecked] = useState();
@@ -51,26 +57,37 @@ function UpdateProductPage() {
         try {
             const response = await findAllCategory();
             if (response !== null) {
-                setCategoryList(response.data);
+                let category = {
+                    male: [],
+                    female: [],
+                    children: []
+                };
+                response.data?.forEach((data, index) => {
+                    if (data.gender === "NỮ") {
+                        category.female.push(data);
+                    } else if (data.gender === "NAM") {
+                        category.male.push(data);
+                    } else if (data.gender === "TRẺ EM") {
+                        category.children.push(data);
+                    }
+                });
+                setCategoryList(category);
                 setIsShowCategory(true);
+                setIsShowSubCategory(true);
             }
         } catch (error) {
             console.error('Failed to fetch Category', error);
         }
     }
-
-    const handleCheckedCategory = (id) => {
+    console.log(categoryList)
+    const handleCheckedCategory = (cate) => {
         setProduct({
             ...product,
-            categoryDto: { id: id }
+            categoryDto: { id: cate?.id }
         });
-        setChecked(id)
-        categoryList.forEach((category, index) => {
-            if(category.id == product.categoryDto.id){
-                setSubCategoryList(category.subCategories);
-                setIsShowSubCategory(true)
-            }
-        })
+        setChecked(cate?.id)
+        setIsShowSubCategory(true)
+        setSubCategoryList(cate?.subCategories)
     };
     const handleCheckedSubCategory = (id) => {
         const isChecked = subCategories.includes(id);
@@ -95,14 +112,27 @@ function UpdateProductPage() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if ((name === 'price' || name === 'stock' || name ==='star') && parseFloat(value) < 1) {
+            alert("Please enter a non-negative value.");
+            return;
+        }
+
         setProduct({ ...product, [name]: value });
     };
+
+    const handleCancelChangeCategory = () => {
+        setIsShowSubCategory(false);
+        setIsShowCategory(false);
+    }
     if (!product) {
         return <div>Loading...</div>;
     }
+    const redirectToAdminPage=()=>{
+        navigate(`/admin`)
+    }
     return (
         <div className="update-product-container">
-            <h1>Update Product</h1>
+            <h1 style={{ fontWeight: 'bold', fontSize: '24px' }}>Update Product</h1>
             <form onSubmit={handleSubmit} className="product-form">
                 <label htmlFor="name">Name :  </label>
                 <input
@@ -134,6 +164,16 @@ function UpdateProductPage() {
                     onChange={handleChange}
                 />
                 <br />
+                <label htmlFor="star">star :  </label>
+                <input
+                    type="number"
+                    id="star"
+                    name="star"
+                    className="border"
+                    value={product.star}
+                    onChange={handleChange}
+                />
+                <br />
                 <label htmlFor="description">Description :  </label>
                 <input
                     type="text"
@@ -152,38 +192,41 @@ function UpdateProductPage() {
                     >
                         {product.categoryDto.name}
                     </p>
-                    <button type="button" className="border" onClick={fetchAllCategoryData}>Change Category</button>
+
                     </div>
                 </>
                 }
 
                 <br />
-                {isShownCategory ?
+                {isShownCategory ? (
                     <>
                         <div className="subcategory-section">
-                        <h1>Change Category</h1>
-                        {categoryList?.map((cate, index) => (
-                            <div className="form-check col-sm-4" key={index}>
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    defaultValue={cate.id}
-                                    id="flexCheckDefault"
-                                    onChange={() => handleCheckedCategory(cate.id)}
-                                        checked = {checked == cate.id}
-                                />
-                                <label className="form-check-label" htmlFor="flexCheckDefault">
-                                    {cate.name}
-                                </label>
-                            </div>
-                        ))}
-                        <button type="button" className="border" onClick={() => {
-                            setIsShowCategory(false);
-                        }
-                        }>Cancel Change Category</button>
+                            <h1>Change Category</h1>
+                            {Object.entries(categoryList).map(([key, value]) => (
+                                <fieldset>
+                                    <legend className="category-title">{key}:</legend>
+                                    {value?.map((cate, index) => (
+                                        <div key={index} className="category-item">
+                                            <input
+                                                type="radio"
+                                                id={`category-${key}-${index}`}
+                                                onChange={() => handleCheckedCategory(cate)}
+                                                checked = {checked == cate.id}
+                                            />
+                                            <label htmlFor={`category-${key}-${index}`}>
+                                                {cate.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </fieldset>
+                            ))}
+                            <button type="button" className="border" onClick={handleCancelChangeCategory}>
+                                Cancel Change Category
+                            </button>
                         </div>
                     </>
-                    : ""}
+                ) : ""}
+
                 <br/>
 
 
@@ -194,6 +237,8 @@ function UpdateProductPage() {
                         >
                             {product.subCategoryDto.name}
                         </p>
+    <br/>
+                        <button type="button" className="border" onClick={fetchAllCategoryData}>Change Category</button>
                     </>
                 }
 
@@ -201,8 +246,8 @@ function UpdateProductPage() {
                 {isShownSubCategory ?
                     <>
                         <h1>Change SubCategory</h1>
-                        {subCategoryList?.map((cate, index) => (
-                            <div className="form-check col-sm-4" key={index}>
+                        {subCategoryList?.map((cate, key) => (
+                            <div className="form-check col-sm-4" key={key}>
                                 <input
                                     className="form-check-input"
                                     type="checkbox"
@@ -215,14 +260,13 @@ function UpdateProductPage() {
                                 </label>
                             </div>
                         ))}
-                        <button type="button" className="border" onClick={() => {
-                            setIsShowSubCategory(false);
-                        }
-                        }>Cancel Change SubCategory</button>
                     </>
                     : ""}
                 <br/>
                 <button type="submit" className="submit-button" onClick={handleSubmit}>Update Product</button>
+                <br/>
+                <br/>
+                <button type="submit" className="submit-button" onClick={redirectToAdminPage}>Back</button>
             </form>
         </div>
     );

@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {deleteProduct, findAllProduct} from "../../api/adminApi/AdminApi";
 import '../../assets/admin/admincss.css';
 import {useNavigate} from "react-router-dom";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 function AdminProductsList() {
-    const [productList, setProductList] = useState([]); // Corrected to useState
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [deletingProductId, setDeletingProductId] = useState(null);
+    const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const navigate = useNavigate();
 
-    const fetchProductList = async () => {
+    const fetchProductList = async (page) => {
         try {
-            let response = await findAllProduct(currentPage);
+            let response = await findAllProduct(page);
+            console.log(response);
             setProductList(response.data.data);
             setTotalPages(response.data.totalPages);
         } catch (erro) {
@@ -20,21 +26,25 @@ function AdminProductsList() {
     }
 
     useEffect(() => {
-        fetchProductList();
+        fetchProductList(currentPage);
     }, [currentPage])
 
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+
     console.log(productList);
 
-    const handleDeleteProduct = async (ProductId) => {
+    const handleDeleteProduct = (productId) => {
+        setDeletingProductId(productId);
+        setIsModalOpen(true);
+    };
+    const confirmDeleteProduct = async () => {
+        if (deletingProductId === null) return;
+
         try {
-            await deleteProduct(ProductId);
-            setProductList(productList.filter(product => product.id !== ProductId));
+            await deleteProduct(deletingProductId);
+            setProductList(productList.filter(product => product.id !== deletingProductId));
+            setIsModalOpen(false);
         } catch (error) {
-            // Xử lý lỗi tại đây
-            console.error("Error deleting movie: " + error);
+            console.error("Error deleting product: " + error);
         }
     };
 
@@ -44,14 +54,20 @@ function AdminProductsList() {
     const redirectToAddProductPage = ()=>{
         navigate(`/admin/add`);
     }
-
+    const redirectToHomePage=()=>{
+        navigate(`/`)
+    }
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+        fetchProductList(newPage);
+    };
     const renderPagination = () => {
         return (
-            <div className="pagination">
-                {Array.from({length: totalPages}, (_, index) => (
+            <div className="pagination-container">
+                {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index}
-                        disabled={index === currentPage}
+                        className={`page-button ${index === currentPage ? 'active-page' : ''}`}
                         onClick={() => handlePageChange(index)}
                     >
                         {index + 1}
@@ -61,6 +77,11 @@ function AdminProductsList() {
         );
     };
     return(
+        <>
+            <header className="admin-header">
+                <button className="home-button" onClick={redirectToHomePage}>HOME</button>
+                <h1 className="page-title">Product Management</h1>
+            </header>
         <div style={{marginLeft : 200, marginRight : 200}}>
             <table id="product">
                 <thead>
@@ -85,8 +106,42 @@ function AdminProductsList() {
                         <td>{product?.star}</td>
                         <td className="action-column">
                             <div className="button-container">
-                                <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-                                <button onClick={() => redirectToUpdateProductPage(product.id)}>Update</button>
+                                <button
+                                    onClick={() => handleDeleteProduct(product.id)}
+                                    style={{ backgroundColor: 'red', color: 'white' }}
+                                >
+                                    Delete
+                                </button>
+                                <Modal
+                                    open={isModalOpen}
+                                    onClose={() => setIsModalOpen(false)}
+                                    aria-labelledby="delete-confirmation-title"
+                                    aria-describedby="delete-confirmation-description"
+                                >
+                                    <Box sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                        width: 400,
+                                        bgcolor: 'background.paper',
+                                        boxShadow: 24,
+                                        p: 4, // padding
+                                    }}>
+                                        <h2 id="delete-confirmation-title">Confirm Delete</h2>
+                                        <p id="delete-confirmation-description">
+                                            Are you sure you want to delete this product?
+                                        </p>
+                                        <Button onClick={confirmDeleteProduct}>Confirm</Button>
+                                        <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                                    </Box>
+                                </Modal>
+                                <button
+                                    onClick={() => redirectToUpdateProductPage(product.id)}
+                                    style={{ backgroundColor: 'blue', color: 'white' }}
+                                >
+                                    Update
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -99,6 +154,7 @@ function AdminProductsList() {
             </div>
         </div>
 
+        </>
     );
 }
 export default AdminProductsList;
