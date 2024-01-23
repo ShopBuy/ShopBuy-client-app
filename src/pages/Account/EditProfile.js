@@ -6,8 +6,7 @@ import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {storage} from "../../config/firebaseConfig";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
-import {Avatar} from "antd";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 function EditProfile() {
     const [user, setUser] = useState(
@@ -63,7 +62,7 @@ function EditProfile() {
             }, 2000);
 
             // setEditMode(false);
-            toast.success(response.data.message || "Update profile successfully !");
+            toast.success(response.data.message || "Cập nhật thông tin tài khoản thành công.");
 
             setTimeout(() => {
                 toast.dismiss();
@@ -71,8 +70,8 @@ function EditProfile() {
 
 
         } catch (error) {
-            toast.error(error.response.data.message || "Failed to update profile.");
-            console.error('Error updating user profile:', error);
+            toast.error(error.response.data.message || "Cập nhật thông tin tài khoản không hợp lệ.");
+            console.error('LỖI CẬP NHẬT TAI KHOẢN:', error);
         }
     };
 
@@ -85,6 +84,19 @@ function EditProfile() {
     };
 
     const handleSaveChanges = () => {
+        if (!isValidatePhoneNumber) {
+            toast.error("Số điện thoại không hợp lệ. Vui lòng nhập 10 chữ số hợp lệ.");
+            return;
+        }
+        if (!isValidateFullName) {
+            toast.error("Tên đầy đủ không hợp lệ. Vui lòng nhập đúng định dạng.");
+            return;
+        }
+        if (!isValidateDateOfBirth) {
+            toast.error("Ngày sinh không hợp lệ. Vui lòng nhập đúng định dạng.");
+            return;
+        }
+
         updateUserProfile();
     };
 
@@ -92,38 +104,66 @@ function EditProfile() {
         navigate("/profile");
     };
 
+    // ===== UPDATE AVATA PROFILE  =====
 
     const [image, setImage] = useState(null);
-    const [imageDefault,setImageDefault] = useState(null);
+    const [imageDefault, setImageDefault] = useState(null);
     useEffect(() => {
-        if(user !== null){
+        if (user !== null) {
             setImageDefault(user.profileImageUrl);
         }
-        console.log("a",imageDefault)
-        if(image !== null){
+        console.log("a", imageDefault)
+        if (image !== null) {
             setImageDefault(image);
-           setUser((prevUser) => ({ ...prevUser, profileImageUrl: image }));
-           setImage(null);
+            setUser((prevUser) => ({...prevUser, profileImageUrl: image}));
+            setImage(null);
         }
 
     });
     const handleImageChange = (e) => {
 
-        console.log("a",imageDefault)
+        console.log("a", imageDefault)
 
         const imageRef = ref(storage, `image_${uuidv4()}`);
         uploadBytes(imageRef, e.target.files[0]).then(() => {
             getDownloadURL(imageRef).then((url) => {
-                 setImage(url)
-                console.log("a",imageDefault)
+                setImage(url)
+                console.log("a", imageDefault)
             }).catch(error => {
-                console.log(error.message, " error getting the image url")
+                console.log(error.message, "Error getting the image url")
             });
-            // setImage(null);
         }).catch(error => {
             console.log(error.message);
         });
     };
+
+    // ===== VALIDATE PROFILE =====
+
+    const [isValidatePhoneNumber, setIsValidatePhoneNumber] = useState(true);
+    useEffect(() => {
+        const phoneNumberRegex = /^\d{10}$/;
+
+        setIsValidatePhoneNumber(phoneNumberRegex.test(user.phoneNumber));
+    }, [user.phoneNumber]);
+
+
+    const [isValidateFullName, setIsValidateFullName] = useState(true);
+    useEffect(() => {
+        const fullNameRegex = /^[^\d!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{5,}$/u;
+
+        setIsValidateFullName(fullNameRegex.test(user.fullName));
+    }, [user.fullName]);
+
+
+    const [isValidateDateOfBirth, setIsValidateDateOfBirth] = useState(true);
+    useEffect(() => {
+        const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
+
+        const isValidFormat = dateFormat.test(user.dateOfBirth);
+        const isPastDate = new Date(user.dateOfBirth) < new Date();
+
+        setIsValidateDateOfBirth(isValidFormat && isPastDate);
+    }, [user.dateOfBirth]);
 
     return (
 
@@ -132,58 +172,58 @@ function EditProfile() {
 
             <div className="flex">
                 <div className="w-1/4 pr-4 lg:pr-0">
-                    <h6 className="text-xs font-semibold mb-2">Membership</h6>
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="text-base font-semibold mb-2">Membership</p>
+                    <p className="hover:text-red-500 text-base   mb-2">
                         <Link to="/profile">
                             <p> Profile </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="#">
                             <p> Coupons </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="#">
                             <p> Purchase history </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="#">
                             <p> Order history </p>
                         </Link>
                     </p>
 
 
-                    <h6 className="text-xs font-semibold mb-2">Profile settings</h6>
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <h6 className="text-base font-semibold mb-2">Profile settings</h6>
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="/edit-profile">
                             <p className="text-red-500"> Edit profile </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="#">
                             <p> Address book </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="#">
-                            <p> Push notifications and privacy settings </p>
+                            <p> Privacy settings </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="/password-profile">
                             <p> Change password </p>
                         </Link>
                     </p>
 
-                    <p className="hover:text-red-500 text-xs  mb-2">
+                    <p className="hover:text-red-500 text-base  mb-2">
                         <Link to="#">
                             <p> My cards </p>
                         </Link>
@@ -211,23 +251,9 @@ function EditProfile() {
                         </div>
                         <br/>
 
-                        {/*<div className="flex flex-col  ">*/}
-                        {/*    <p className="font-titleFont text-base font-semibold">*/}
-                        {/*        LINK URL DATABASE*/}
-                        {/*    </p>*/}
-                        {/*    <input                         */}
-                        {/*    value={user?.profileImageUrl}*/}
-                        {/*    onChange={handleInputChange}*/}
-                        {/*    className="w-full h-10 px-4 text-base font-medium outline-none bg-gray-100 p-2 border-b border-blue-500"*/}
-                        {/*    type="profileImageUrl"*/}
-                        {/*    />*/}
-                        {/*</div>*/}
-                        {/*<br/>*/}
-
-
                         <div className="flex flex-col">
                             <p className="font-titleFont text-base font-semibold">
-                                FULL NAME
+                                FULL NAME <span className="text-red-500">*</span>
                             </p>
                             <input
                                 name="fullName"
@@ -236,20 +262,31 @@ function EditProfile() {
                                 className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
                                 type="fullName"
                             />
+                            {!isValidateFullName && (
+                                <p className=" text-red-600">Vui lòng nhập trên 4 ký tự, không chứa ký tự đặc biệt,
+                                    số.</p>
+                            )}
+                            {isValidateFullName && <p className="text-green-600">Tên đầy đủ hợp lệ !</p>}
                         </div>
                         <br/>
 
                         <div className="flex flex-col">
                             <p className="font-titleFont text-base font-semibold">
-                                BIRTHDAY
+                                BIRTHDAY <span className="text-red-500">*</span>
                             </p>
                             <input
+
                                 name="dateOfBirth"
                                 value={user?.dateOfBirth}
                                 onChange={handleInputChange}
                                 className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
                                 type="date"
                             />
+                            {!isValidateDateOfBirth && (
+                                <p className=" text-red-600">Vui lòng nhập đúng ngày, tháng, năm trong quá khứ</p>
+                            )}
+                            {isValidateDateOfBirth && <p className="text-green-600">Ngày sinh hợp lệ !</p>}
+
                         </div>
                         <br/>
 
@@ -272,15 +309,22 @@ function EditProfile() {
 
                         <div className="flex flex-col">
                             <p className="font-titleFont text-base font-semibold">
-                                MOBILE PHONE
+                                MOBILE PHONE <span className="text-red-500">*</span>
                             </p>
                             <input
+
                                 name="phoneNumber"
                                 value={user?.phoneNumber}
                                 onChange={handleInputChange}
                                 className="w-full h-10 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal outline-none bg-gray-100 p-2 border-b border-blue-500 "
                                 type="text"
                             />
+
+                            {!isValidatePhoneNumber && (
+                                <p className=" text-red-600">Vui lòng nhập đúng định dạng 10 số.</p>
+                            )}
+                            {isValidatePhoneNumber && <p className="text-green-600">Số điện thoại hợp lệ !</p>}
+
                         </div>
                         <br/>
                         <div className="flex items-center justify-center">
