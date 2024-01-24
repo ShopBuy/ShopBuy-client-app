@@ -3,7 +3,7 @@ import {useLocation, useParams} from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import {findProductsById} from "../../api/productApi/ProductApi";
 import ProductInfo from "../../pages/product/ProductInfo";
-// import ProductsOnSale from "../../components/pageProps/productDetails/ProductsOnSale";
+
 
 const ProductDetails = () => {
     const location = useLocation();
@@ -18,9 +18,10 @@ const ProductDetails = () => {
         setProductInfo(location.state.item);
         setPrevLocation(location.pathname);
     }, [location, productInfo]);
+    console.log(productInfo)
     useEffect(() => {
         fetchProductById();
-    }, [])
+    }, [id])
     return (
         <div className="w-full mx-auto border-b-[1px] border-b-gray-300">
             <div className="max-w-container mx-auto px-4">
@@ -32,11 +33,14 @@ const ProductDetails = () => {
                         {/*<ProductsOnSale />*/}
                     </div>
                     <div className="h-full xl:col-span-2">
-                        {/*<img*/}
-                        {/*    className="w-full h-full object-cover"*/}
-                        {/*    src={productInfo.img}*/}
-                        {/*    alt={productInfo.img}*/}
-                        {/*/>*/}
+
+                        {productInfo?.imageProductListDto?.map((img, index) => (
+                            <img
+                                className="w-full h-full object-cover"
+                                src={img.url}
+                                alt={img.url}
+                            />
+                        ))}
                     </div>
                     <div className="h-full w-full md:col-span-2 xl:col-span-3 xl:p-14 flex flex-col gap-6 justify-center">
                         <ProductInfo productInfo={productInfo} />

@@ -20,3 +20,30 @@
 .action-column {
     text-align: center;
 }
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Khoảng cách từ trang web */
+}
+
+.page-button {
+    background-color: #e0e0e0;
+    border: none;
+    color: #333;
+    padding: 5px 10px;
+    margin: 0 5px; /* Khoảng cách giữa các nút truyền trang */
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.page-button:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.active-page {
+    background-color: #333;
+    color: #fff;
+}
