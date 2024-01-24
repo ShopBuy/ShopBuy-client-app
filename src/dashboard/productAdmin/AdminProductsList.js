@@ -17,7 +17,6 @@ function AdminProductsList() {
     const fetchProductList = async (page) => {
         try {
             let response = await findAllProduct(page);
-            console.log(response);
             setProductList(response.data.data);
             setTotalPages(response.data.totalPages);
         } catch (erro) {
@@ -26,11 +25,18 @@ function AdminProductsList() {
     }
 
     useEffect(() => {
-        fetchProductList(currentPage);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(user == null) {
+            navigate("/login")
+        }
+        if(user?.roleId == 1){
+            fetchProductList(currentPage);
+        }else {
+            navigate("/unauthorized")
+        }
+
     }, [currentPage])
 
-
-    console.log(productList);
 
     const handleDeleteProduct = (productId) => {
         setDeletingProductId(productId);
@@ -61,9 +67,47 @@ function AdminProductsList() {
         setCurrentPage(newPage);
         fetchProductList(newPage);
     };
+    const handleFirstPage = () => {
+        setCurrentPage(0);
+        fetchProductList(0);
+    };
+    const handleLastPage = () => {
+        const lastPageIndex = totalPages - 1;
+        setCurrentPage(lastPageIndex);
+        fetchProductList(lastPageIndex);
+    };
+    const handlePreviousPage = () => {
+        if (currentPage > 0) {
+            const newPage = currentPage - 1;
+            setCurrentPage(newPage);
+            fetchProductList(newPage);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages - 1) {
+            const newPage = currentPage + 1;
+            setCurrentPage(newPage);
+            fetchProductList(newPage);
+        }
+    };
     const renderPagination = () => {
         return (
             <div className="pagination-container">
+                <button
+                    className="page-button"
+                    onClick={handleFirstPage}
+                    disabled={currentPage === 0}
+                >
+                    First Page
+                </button>
+                <button
+                    className="page-button"
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 0}
+                >
+                    Previous
+                </button>
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
                         key={index}
@@ -73,6 +117,20 @@ function AdminProductsList() {
                         {index + 1}
                     </button>
                 ))}
+                <button
+                    className="page-button"
+                    onClick={handleNextPage}
+                    disabled={currentPage === totalPages - 1}
+                >
+                    Next
+                </button>
+                <button
+                    className="page-button"
+                    onClick={handleLastPage}
+                    disabled={currentPage === totalPages - 1}
+                >
+                    Last Page
+                </button>
             </div>
         );
     };
@@ -92,7 +150,7 @@ function AdminProductsList() {
                     <th>STOCK</th>
                     <th>DESCRIPTION</th>
                     <th>STAR</th>
-                    <th>ACTION</th>
+                    <th>  <button type="button" className="submit-button" onClick={redirectToAddProductPage}>ADD Product</button></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -108,7 +166,7 @@ function AdminProductsList() {
                             <div className="button-container">
                                 <button
                                     onClick={() => handleDeleteProduct(product.id)}
-                                    style={{ backgroundColor: 'red', color: 'white' }}
+                                    type="button" className="submit-button-detele"
                                 >
                                     Delete
                                 </button>
@@ -138,7 +196,7 @@ function AdminProductsList() {
                                 </Modal>
                                 <button
                                     onClick={() => redirectToUpdateProductPage(product.id)}
-                                    style={{ backgroundColor: 'blue', color: 'white' }}
+                                    type="button" className="submit-button"
                                 >
                                     Update
                                 </button>
@@ -150,7 +208,7 @@ function AdminProductsList() {
             </table>
             {renderPagination()}
             <div>
-                <button type="button" className="submit-button" onClick={redirectToAddProductPage}>ADD Product</button>
+
             </div>
         </div>
 

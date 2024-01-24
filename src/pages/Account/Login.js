@@ -71,7 +71,7 @@ function Login() {
             email: email,
             password: password
           });
-          // console.log(response)
+
 
           if (response.status === 200) {
             console.log("Login successful!");
@@ -81,11 +81,7 @@ function Login() {
             localStorage.setItem("email", response.data.data.email);
             localStorage.setItem('token', response.data.data.token);
             localStorage.setItem("roleId", response.data.data.roleId);
-
-            // setSuccessMsg(`Hello dear ${email}`);
-            // setEmail("");
-            // setPassword("");
-
+            localStorage.setItem("user", JSON.stringify(response.data.data));
 
             toast.success( "Login successful!" || response.data.message );
             setTimeout(() => {
@@ -96,7 +92,7 @@ function Login() {
 
 
             setTimeout(() => {
-              navigate('/');
+              window.location.replace("http://localhost:3000");
             }, 3500);
 
           } else {
@@ -128,7 +124,7 @@ function Login() {
     }else if (data?.statusCode === 200){
       localStorage.setItem("token",data?.data.token);
       localStorage.setItem("user",JSON.stringify(data?.data));
-      navigate("/");
+      window.location.replace("http://localhost:3000");
     }else {
       navigate("/login")
     }

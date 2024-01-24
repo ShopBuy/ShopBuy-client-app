@@ -13,11 +13,16 @@ import ProductDetail from "./pages/product/ProductDetail";
 import AdminProductsList from "./dashboard/productAdmin/AdminProductsList";
 import UpdateProductPage from "./dashboard/productAdmin/UpdateProductPage";
 import AddProductPage from "./dashboard/productAdmin/AddProductPage";
+import Error401 from "./pages/error/Errorr401";
+import {useState} from "react";
+
 
 const Layout = () => {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
     return (
         <div>
-            <Header/>
+            <Header user={user}/>
             <Outlet/>
             <Footer/>
             <FooterBottom/>
@@ -27,6 +32,10 @@ const Layout = () => {
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route>
+            <Route path="/admin" element={<AdminProductsList/>} ></Route>
+            <Route path="/admin/update/:productId" element={<UpdateProductPage />} />
+            <Route path="/admin/add" element={<AddProductPage />} />
+            <Route path="/unauthorized" element={<Error401 />} />
             <Route path="/" element={<Layout/>}>
                 <Route path="/shop" element={<Shop/>}></Route>
                 <Route path="/product/:id" element={<ProductDetail/>}></Route>
@@ -36,11 +45,7 @@ const router = createBrowserRouter(
                 <Route path="/profile" element={<Profile/>}></Route>
                 <Route path="/password-profile" element={<PasswordProfile/>}></Route>
                 <Route path="/edit-profile" element={<EditProfile/>}></Route>
-
             </Route>
-            <Route path="/admin" element={<AdminProductsList/>}></Route>
-            <Route path="/admin/update/:productId" element={<UpdateProductPage />} />
-            <Route path="/admin/add" element={<AddProductPage />} />
         </Route>
     )
 );

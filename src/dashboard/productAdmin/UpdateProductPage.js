@@ -33,19 +33,27 @@ function UpdateProductPage() {
     const [checked, setChecked] = useState();
 
     useEffect(() => {
-        const fetchProductData = async () => {
-            try {
-                const response = await findProductsByIdAdmin(productId);
-                setProduct(response.data);
-            } catch (error) {
-                console.error('Failed to fetch product', error);
-            }
-        };
-        fetchProductData();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(user == null) {
+            navigate("/login")
+        }
+        if(user?.roleId == 1){
+            fetchProductData()
+        }else {
+            navigate("/unauthorized")
+        }
     }, [productId]);
+    const fetchProductData = async () => {
+        try {
+            const response = await findProductsByIdAdmin(productId);
+            setProduct(response.data);
+        } catch (error) {
+            console.error('Failed to fetch product', error);
+            navigate("/unauthorized");
+        }
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(product)
         try {
             await updateProduct(productId, product);
             navigate('/admin');
@@ -79,7 +87,6 @@ function UpdateProductPage() {
             console.error('Failed to fetch Category', error);
         }
     }
-    console.log(categoryList)
     const handleCheckedCategory = (cate) => {
         setProduct({
             ...product,

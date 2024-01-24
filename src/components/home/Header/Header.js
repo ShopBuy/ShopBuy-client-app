@@ -12,7 +12,7 @@ import axios from "axios";
 
 // import axios from "axios";
 
-function Header() {
+function Header(user) {
     const navigate = useNavigate();
 
     const [showWomen, setShowWomen] = useState(false);
@@ -21,10 +21,9 @@ function Header() {
     const [showPages, setShowPages] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
     const [email, setEmail] = useState("");
-
-
+    const [userInfo, setUserInfo] = useState( user?.user );
+    console.log(userInfo)
     const token = localStorage.getItem("token");
-
 
     const handleWomenMouseEnter = () => {
         setShowWomen(true);
@@ -73,9 +72,10 @@ function Header() {
         localStorage.removeItem("email");
         setEmail(null);
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         // localStorage.removeItem("role");
         // localStorage.removeItem("id");
-
+        setUserInfo(null);
         setShowAccount(false);
         toast.success("Log Out successful!");
         setTimeout(() => {
@@ -219,6 +219,14 @@ function Header() {
                             SHOP
                         </Link>
                     </div>
+                    {
+                        userInfo?.roleId == 1 ?
+                            <div style={{marginRight: "15px"}}>
+                            <Link to="/admin" className="ml-4 text-black font-bold hover:text-red-500">
+                                Admin Page
+                            </Link>
+                        </div> : ""
+                    }
                 </div>
 
                 <div className="flex-grow flex items-center justify-center"></div>

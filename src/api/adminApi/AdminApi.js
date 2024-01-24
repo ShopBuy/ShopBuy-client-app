@@ -11,7 +11,6 @@ export const findAllProduct = async (pageNumber = 0, pageSize = 7) => {
     } catch (e) {
         console.log("Find products API error: " + e);
     }
-    console.log(result)
     return result?.data;
 };
 

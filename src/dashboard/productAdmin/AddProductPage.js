@@ -33,7 +33,15 @@ function AddProductPage() {
     const [checkSubCate, setCheckedSubCate] = useState();
 
     useEffect(() => {
-       fetchAllCategoryData();
+        const user = JSON.parse(localStorage.getItem("user"));
+       if(user == null) {
+           navigate("/login")
+       }
+       if(user?.roleId == 1){
+           fetchAllCategoryData()
+       }else {
+           navigate("/unauthorized")
+       }
     }, []);
 
     const handleSubmit = async (e) => {
@@ -42,12 +50,10 @@ function AddProductPage() {
             const response = await fetchCreateNewProduct(product);
             navigate('/admin');
             console.log('Product added:', response.data);
-            console.log(product)
 
         } catch (error) {
             console.error('Failed to add product:', error);
         }
-        console.log(product)
     };
     const fetchAllCategoryData = async () =>{
         try {
