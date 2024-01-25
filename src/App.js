@@ -15,6 +15,8 @@ import AddProductPage from "./dashboard/productAdmin/AddProductPage";
 import ShopBuy from "./pages/Shop/ShopBuy";
 import Error401 from "./pages/error/Errorr401";
 import {useState} from "react";
+import ProductBySubCategoryId from "./pages/product/ProductBySubCategory ";
+import ShopBuySubCategory from "./pages/Shop/ShopBuySubCategory";
 
 
 const Layout = () => {
@@ -46,6 +48,8 @@ const router = createBrowserRouter(
                 <Route path="/password-profile" element={<PasswordProfile/>}></Route>
                 <Route path="/edit-profile" element={<EditProfile/>}></Route>
                 <Route path="/shopbuy" element={<ShopBuy/>}></Route>
+                {/*<Route path="/products/:subCategoryId" element={<ProductBySubCategoryId/>}></Route>*/}
+                <Route path="/products/subCategory/:subCategoryId" element={<ShopBuySubCategory/>}></Route>
 
             </Route>
             <Route path="/admin" element={<AdminProductsList/>}></Route>

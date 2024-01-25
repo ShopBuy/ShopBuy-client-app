@@ -1,25 +1,25 @@
+// ProductBySubCategoryId.js
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import {useParams} from "react-router-dom";
 import {MdStarRate} from "react-icons/md";
 import ReactPaginate from "react-paginate";
 
-
-function ProductAll() {
+function ProductBySubCategoryId() {
     const [products, setProducts] = useState([]);
-
+    const {subCategoryId} = useParams();
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/products');
+                const response = await axios.get(`http://localhost:8080/api/products/subCategory/${subCategoryId}`);
                 setProducts(response.data.data);
-                console.log(response.data.data);
             } catch (error) {
-                console.error('Lỗi lấy sản phẩm:', error);
+                console.error('Error fetching products:', error);
             }
         };
 
         fetchProducts();
-    }, []);
+    }, [subCategoryId]);
 
     const [currentPage, setCurrentPage] = useState(0);
     const productsPerPage = 12;
@@ -38,7 +38,6 @@ function ProductAll() {
     const pageCount = Math.ceil(products.length / productsPerPage);
 
     return (
-
         <div>
             <div className="product-list"
                  style={{
@@ -46,7 +45,7 @@ function ProductAll() {
                      flexWrap: 'wrap',
                      justifyContent: 'center',
                  }}>
-
+                {/* Hiển thị danh sách sản phẩm */}
                 {currentProducts.map((product) => (
                     <div key={product.id}
                          className="product-list shadow shadow-gray-500 "
@@ -193,10 +192,9 @@ function ProductAll() {
             <p className="text-base font-normal text-lightText" style={{ textAlign: 'right' }}>
                 {indexOfFirstProduct + 1} - {indexOfLastProduct} / {products.length}
             </p>
+
         </div>
     );
 }
 
-
-export default ProductAll;
-
+export default ProductBySubCategoryId;

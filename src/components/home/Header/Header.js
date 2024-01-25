@@ -9,6 +9,8 @@ import {AiOutlineHeart} from "react-icons/ai";
 import {toast} from "react-toastify";
 import Search from "../../../pages/Shop/Search";
 import axios from "axios";
+import ProductBySubCategoryId from "../../../pages/product/ProductBySubCategory ";
+
 
 
 function Header(user) {
@@ -58,7 +60,6 @@ function Header(user) {
     const [genders, setGenders] = useState([]);
 
     useEffect(() => {
-        // Thực hiện fetch categories nếu categories chưa được lấy
         if (categories.length === 0) {
             const fetchCategories = async () => {
                 try {
@@ -114,10 +115,11 @@ function Header(user) {
     const [products, setProducts] = useState([]);
     const handleSubCategoryClick = async (subCategoryId) => {
         try {
-            // Gọi API để lấy danh sách sản phẩm dựa trên subCategoryId
-            const response = await axios.get(`http://localhost:8080/api/products/subCategory/${subCategoryId}`);
-            setProducts(response.data.data);
-            setSelectedSubCategory(subCategoryId);
+            // const response = await axios.get(`http://localhost:8080/api/products/subCategory/${subCategoryId}`);
+            // setProducts(response.data.data);
+            // setSelectedSubCategory(subCategoryId);
+            setShowCategories(false);
+            navigate(`/products/subCategory/${subCategoryId}`);
         } catch (error) {
             console.error('Error fetching products:', error);
         }
@@ -285,8 +287,6 @@ function Header(user) {
                     {/* Subcategory  */}
                     {selectedCategory && (
                         <div className="flex-1 bg-gray-100 pl-4 shadow shadow-red-500">
-                            {/*<br/>*/}
-                            {/*<p className="text-xl font-bold mb-2">{selectedCategory.name}</p>*/}
                             <ul>
                                 {subCategories.map(subcategory => (
                                     <li key={subcategory.id} className="group">
