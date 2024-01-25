@@ -15,7 +15,7 @@ const ProductInfo = ({ productInfo }) => {
                 {productInfo?.variantListDto?.map((variant, index) => (
                     <div key={index}>
                         <input
-                            type="checkbox"
+                            type="radio"
                             id={`colorCheckbox-${index}`}
                             name="colorOptions"
                             value={variant?.colorDto.name}

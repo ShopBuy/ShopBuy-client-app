@@ -62,7 +62,7 @@ const Search = () => {
                                 className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                             >
                                 {/*<img className="w-24" src={spfOne} alt="productImg" />*/}
-                                <div className="flex flex-col gap-1">a
+                                <div className="flex flex-col gap-1">
                                     <p className="font-semibold text-lg">
                                         {item?.name}
                                     </p>
