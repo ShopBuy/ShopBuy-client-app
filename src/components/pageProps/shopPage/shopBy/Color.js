@@ -7,38 +7,44 @@ const Color = () => {
   const colors = [
     {
       _id: 9001,
-      title: "Green",
-      base: "#22c55e",
+      title: "Màu Đen",
+      base: "#000000",
     },
     {
       _id: 9002,
-      title: "Gray",
-      base: "#a3a3a3",
+      title: "Màu Trắng",
+      base: "#FFFFFF",
     },
     {
       _id: 9003,
-      title: "Red",
-      base: "#dc2626",
+      title: "Màu Đỏ",
+      base: "#FF0000",
     },
     {
       _id: 9004,
-      title: "Yellow",
-      base: "#f59e0b",
+      title: "Màu Xanh Dương",
+      base: "#0000FF",
     },
     {
       _id: 9005,
-      title: "Blue",
-      base: "#3b82f6",
+      title: "Màu Vàng",
+      base: "#FFFF00",
+    },
+    {
+      _id: 9006,
+      title: "Màu Hồng",
+      base: "#FF00FF",
     },
   ];
 
   return (
-    <div>
+    <div >
       <div
         onClick={() => setShowColors(!showColors)}
-        className="cursor-pointer"
+        className="cursor-pointer "
+
       >
-        <NavTitle title="Shop by Color" icons={true} />
+        <NavTitle title="Tìm Màu sắc" icons={true} />
       </div>
       {showColors && (
         <motion.div
@@ -46,15 +52,15 @@ const Color = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <ul className="flex flex-col gap-4 text-sm lg:text-base text-[#767676]">
+          <ul className="flex flex-col gap-4 text-sm lg:text-base text-[#767676] ">
             {colors.map((item) => (
               <li
                 key={item._id}
-                className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2"
+                className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2 "
               >
                 <span
                   style={{ background: item.base }}
-                  className={`w-3 h-3 bg-gray-500 rounded-full`}
+                  className={`w-3 h-3 bg-gray-500 rounded-full shadow shadow-gray-500`}
                 ></span>
                 {item.title}
               </li>

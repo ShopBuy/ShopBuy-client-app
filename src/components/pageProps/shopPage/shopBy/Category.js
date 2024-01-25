@@ -8,30 +8,62 @@ const Category = () => {
   const items = [
     {
       _id: 990,
-      title: "New Arrivals",
+      title: "ÁO-NỮ",
       icons: true,
     },
     {
       _id: 991,
-      title: "Gudgets",
+      title: "QUẦN-NỮ",
     },
     {
       _id: 992,
-      title: "Accessories",
+      title: "ĐẦM & VÁY-NỮ",
       icons: true,
     },
     {
       _id: 993,
-      title: "Electronics",
+      title: "MẶC NHÀ-NỮ",
     },
     {
       _id: 994,
-      title: "Others",
+      title: "MẶC NGOÀI-NỮ",
+    },
+    {
+      _id: 995,
+      title: "ÁO-NAM",
+    },
+    {
+      _id: 996,
+      title: "QUẦN-NAM",
+    },
+    {
+      _id: 997,
+      title: "MẶC NHÀ-NAM",
+    },
+    {
+      _id: 998,
+      title: "MẶC NGOÀI-NAM",
+    },
+    {
+      _id: 999,
+      title: "ÁO-TRẺ",
+    },
+    {
+      _id: 100,
+      title: "QUẦN-TRẺ",
+    },
+    {
+      _id: 101,
+      title: "MẶC NHÀ-TRẺ",
+    },
+    {
+      _id: 102,
+      title: "MẶC NGOÀI-TRẺ",
     },
   ];
   return (
-    <div className="w-full">
-      <NavTitle title="Shop by Category" icons={false} />
+    <div className="w-full ">
+      <NavTitle title="Tìm Danh mục" icons={false} />
       <div>
         <ul className="flex flex-col gap-4 text-sm lg:text-base text-[#767676]">
           {items.map(({ _id, title, icons }) => (
@@ -45,7 +77,7 @@ const Category = () => {
                   onClick={() => setShowSubCatOne(!showSubCatOne)}
                   className="text-[10px] lg:text-xs cursor-pointer text-gray-400 hover:text-primeColor duration-300"
                 >
-                  <ImPlus />
+                  {/*<ImPlus />*/}
                 </span>
               )}
             </li>

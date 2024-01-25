@@ -10,53 +10,14 @@ import {toast} from "react-toastify";
 import Search from "../../../pages/Shop/Search";
 import axios from "axios";
 
-// import axios from "axios";
 
 function Header() {
     const navigate = useNavigate();
 
-    const [showWomen, setShowWomen] = useState(false);
-    const [showMen, setShowMen] = useState(false);
-    const [showKids, setShowKids] = useState(false);
-    const [showPages, setShowPages] = useState(false);
     const [showAccount, setShowAccount] = useState(false);
     const [email, setEmail] = useState("");
 
-
     const token = localStorage.getItem("token");
-
-
-    const handleWomenMouseEnter = () => {
-        setShowWomen(true);
-    };
-
-    const handleWomenMouseLeave = () => {
-        setShowWomen(false);
-    };
-
-    const handleMenMouseEnter = () => {
-        setShowMen(true);
-    };
-
-    const handleMenMouseLeave = () => {
-        setShowMen(false);
-    };
-
-    const handleKidsMouseEnter = () => {
-        setShowKids(true);
-    };
-
-    const handleKidsMouseLeave = () => {
-        setShowKids(false);
-    };
-
-    const handlePagesMouseEnter = () => {
-        setShowPages(true);
-    };
-
-    const handlePagesMouseLeave = () => {
-        setShowPages(false);
-    };
 
 
     const handleAccountMouseEnter = () => {
@@ -73,8 +34,6 @@ function Header() {
         localStorage.removeItem("email");
         setEmail(null);
         localStorage.removeItem("token");
-        // localStorage.removeItem("role");
-        // localStorage.removeItem("id");
 
         setShowAccount(false);
         toast.success("Log Out successful!");
@@ -124,54 +83,45 @@ function Header() {
     // ====== SUBCATEGORY ======
 
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [subcategories, setSubcategories] = useState([]);
-
-    useEffect(() => {
-
-        if (categories.length === 0) {
-            const fetchCategories = async () => {
-                try {
-                    // const response = await axios.get('http://localhost:8080/api/categories');
-                    const response = await axios.get('http://localhost:8080/api/home/category/all');
-                    setCategories(response.data.data);
-                } catch (error) {
-                    console.error('Error fetching categories:', error);
-                }
-            };
-            fetchCategories();
-        }
-
-        if (categories.length > 0 && genders.length === 0) {
-            const uniqueGenders = Array.from(new Set(categories.map((category) => category.gender)));
-            setGenders(uniqueGenders);
-        }
-    }, [categories, genders]);
+    const [subCategories, setSubCategories] = useState([]);
 
     const handleGenderClick = (gender) => {
         setSelectedGender(gender);
         setSelectedCategory(null);
         setShowCategories(!showCategories);
-        setSubcategories([]);
+        setSubCategories([]);
     };
 
-    const handleCategoryClick = async (categoryName) => {
-        // Find the selected category by name
-        const selectedCategory = categories.find(category => category.name === categoryName);
-        setSelectedCategory(selectedCategory);
 
+    const handleCategoryClick = async (categoryId) => {
         try {
-            // Fetch subcategories for the selected category
-            const response = await axios.get(`http://localhost:8080/api/subCategories`);
-            setSubcategories(response.data.data);
+            const response = await axios.get(`http://localhost:8080/api/subCategories/${categoryId}`);
+            setSubCategories(response.data.data);
+            setSelectedCategory(categoryId);
+            setShowCategories(true);
         } catch (error) {
-            console.error('Error fetching subcategories:', error);
+            console.error('Error fetching subCategories:', error);
+        }
+    };
+
+    const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+    const [products, setProducts] = useState([]);
+    const handleSubCategoryClick = async (subCategoryId) => {
+        try {
+            // Gọi API để lấy danh sách sản phẩm dựa trên subCategoryId
+            const response = await axios.get(`http://localhost:8080/api/products/subCategory/${subCategoryId}`);
+            setProducts(response.data.data);
+            setSelectedSubCategory(subCategoryId);
+        } catch (error) {
+            console.error('Error fetching products:', error);
         }
     };
 
 
     return (
         <div className="w-full h-20 bg-white sticky top-0 z-50 border-b-[1px] border-b-gray-200">
-            <nav className="h-full px-4 max-w-container mx-auto relative flex items-center justify-between">
+
+            <nav className="h-full px-4 max-w-container mx-auto relative flex items-center justify-between ">
 
                 <div className="flex items-center">
                     <Link to="/">
@@ -182,7 +132,7 @@ function Header() {
                 </div>
 
 
-                <div className="flex items-center">
+                <div className="flex items-center ">
 
                     <div className="relative ml-4">
                         <ul style={{
@@ -198,8 +148,8 @@ function Header() {
                                     className="transition-transform transform hover:scale-125 "
                                 >
                             <span
-                                className={`cursor-pointer font-bold text-black 
-                                ${gender === selectedGender ? 'text-red-500 hover:translate-x-5' : ''}`}
+                                className={`cursor-pointer font-bold text-black hover:text-red-500
+                                ${gender === selectedGender ? 'text-black-500 hover:translate-x-5' : ''}`}
                                 onClick={() => handleGenderClick(gender)}
                             >
                                 {gender}
@@ -208,15 +158,11 @@ function Header() {
                             ))}
                         </ul>
                     </div>
-                    {/*--------------*/}
-
-
-                    {/*---------*/}
-
 
                     <div style={{marginRight: "15px"}}>
-                        <Link to="/shop" className="ml-4 text-black font-bold hover:text-red-500">
-                            SHOP
+                        <Link to="/shopbuy" className="ml-4 text-black font-bold hover:text-red-500
+                              block p-2 rounded-md transition-transform transform hover:scale-125 "
+                        >  TẤT CẢ
                         </Link>
                     </div>
                 </div>
@@ -281,12 +227,10 @@ function Header() {
                                             </li>
                                         </Link>
                                     </>
-                                )
-                                }
+                                )}
                             </motion.ul>
                         )}
                     </div>
-
 
                     <div style={{marginRight: "15px"}}>
                         <Link to="#">
@@ -301,26 +245,24 @@ function Header() {
                                      style={{fontSize: "25px", color: "black"}}/>
                         </Link>
                     </div>
-
                 </div>
             </nav>
 
 
-            {/* Subcategory List */}
             {showCategories && (
-                <div className="ml-15 max-w-container mx-auto relative flex">
+                <div className="ml-15 max-w-container mx-auto relative flex shadow shadow-red-500 ">
                     {/* Category  */}
                     <div className="flex-1 bg-gray-100 pr-4 ">
                         <ul>
                             {filteredCategories.map(category => (
                                 <li key={category.id} className="group">
-            <span
-                className={`block p-2 rounded-md transition-transform transform hover:text-red-500 hover:font-bold hover:scale-102 hover:translate-x-2 
-                          ${category === selectedCategory ? 'text-red-500 font-bold' : ''}`}
-                onClick={() => handleCategoryClick(category.name)}
-            >
-              {category.name}
-            </span>
+                        <span
+                            className={`block p-2 rounded-md transition-transform transform hover:text-red-500 hover:font-bold hover:scale-102 hover:translate-x-2
+                                    ${category.id === selectedCategory ? 'text-red-500 font-bold' : ''}`}
+                            onClick={() => handleCategoryClick(category.id)}
+                        >
+                            {category.name}
+                        </span>
                                 </li>
                             ))}
                         </ul>
@@ -328,17 +270,20 @@ function Header() {
 
                     {/* Subcategory  */}
                     {selectedCategory && (
-                        <div className="flex-1 bg-gray-100 pl-4">
-                            <br/>
-                            <p className="text-xl font-bold mb-2">{selectedCategory.name}</p>
+                        <div className="flex-1 bg-gray-100 pl-4 shadow shadow-red-500">
+                            {/*<br/>*/}
+                            {/*<p className="text-xl font-bold mb-2">{selectedCategory.name}</p>*/}
                             <ul>
-                                {subcategories.map(subcategory => (
+                                {subCategories.map(subcategory => (
                                     <li key={subcategory.id} className="group">
-              <span
-                  className="block p-2 rounded-md transition-transform transform hover:text-red-500 hover:font-bold hover:scale-105 hover:translate-x-5"
-              >
-                {subcategory.name}
-              </span>
+                            <span
+                                className="block p-2 rounded-md transition-transform transform hover:text-red-500 hover:font-bold hover:scale-105 hover:translate-x-5"
+                                onClick={() => {
+                                    handleSubCategoryClick(subcategory.id);
+                                }}
+                            >
+                                {subcategory.name}
+                            </span>
                                     </li>
                                 ))}
                             </ul>
@@ -346,7 +291,6 @@ function Header() {
                     )}
                 </div>
             )}
-
         </div>
     );
 };
