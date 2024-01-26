@@ -20,6 +20,7 @@ function UpdateProductPage() {
         imageProductListDto: [],
         variantListDto: []
     });
+    console.log(product)
     const [isShownCategory , setIsShowCategory] = useState(false);
     const [isShownSubCategory , setIsShowSubCategory] = useState(false);
     const [categoryList, setCategoryList] = useState({
@@ -178,17 +179,18 @@ function UpdateProductPage() {
                     name="star"
                     className="border"
                     value={product.star}
-                    onChange={handleChange}
+                    onChange={handleChange} 
                 />
                 <br />
-                <label htmlFor="description">Description :  </label>
-                <input
-                    type="text"
+                <label htmlFor="description">Description : </label>
+                <textarea
                     id="description"
                     name="description"
                     className="border"
                     value={product.description}
                     onChange={handleChange}
+                    rows={4}
+                    cols={67}
                 />
                 <br />
                 {isShownCategory ? "" :
@@ -254,7 +256,7 @@ function UpdateProductPage() {
                     <>
                         <h1>Change SubCategory</h1>
                         {subCategoryList?.map((cate, key) => (
-                            <div className="form-check col-sm-4" key={key}>
+                            <div className="form-check col-sm-4 subcategory-item" key={key}>
                                 <input
                                     className="form-check-input"
                                     type="checkbox"

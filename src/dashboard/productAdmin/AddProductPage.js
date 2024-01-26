@@ -149,7 +149,7 @@ function AddProductPage() {
                     onChange={handleChange}
                 />
                 <br />
-                <label htmlFor="star">Stock :  </label>
+                <label htmlFor="star">Star :  </label>
                 <input
                     type="number"
                     id="star"
@@ -160,13 +160,15 @@ function AddProductPage() {
                 />
                 <br />
                 <label htmlFor="description">Description :  </label>
-                <input
+                <textarea
                     type="text"
                     id="description"
                     name="description"
                     className="border"
                     value={product.description}
                     onChange={handleChange}
+                    rows={4}
+                    cols={67}
                 />
                 <br />
                     <>
@@ -217,7 +219,7 @@ function AddProductPage() {
                     </>
                     : ""}
                 <br/>
-                <button type="submit" className="submit-button" onClick={handleSubmit}>Update Product</button>
+                <button type="submit" className="submit-button" onClick={handleSubmit}>ADD Product</button>
                 <br/>
                 <br/>
                 <button type="submit" className="submit-button" onClick={redirectToAdminPage}>Back</button>
