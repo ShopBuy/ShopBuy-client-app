@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {deleteProduct, findAllProduct} from "../../api/adminApi/AdminApi";
 import '../../assets/admin/admincss.css';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -138,6 +138,11 @@ function AdminProductsList() {
         <>
             <header className="admin-header">
                 <button className="home-button" onClick={redirectToHomePage}>HOME</button>
+                <button className="home-button">
+                    <Link to="/adm/categories" className="home-button">
+                        CATEGORY
+                    </Link>
+                </button>
                 <h1 className="page-title">Product Management</h1>
             </header>
         <div style={{marginLeft : 200, marginRight : 200}}>
