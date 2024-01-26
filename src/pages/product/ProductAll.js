@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {MdStarRate} from "react-icons/md";
 import ReactPaginate from "react-paginate";
+import {Link} from "react-router-dom";
 
 
 function ProductAll() {
@@ -158,6 +159,11 @@ function ProductAll() {
                                 currency: 'VND'
                             }).format(product.price || 0)}
                         </p>
+
+                        {/*<p>*/}
+                        {/*    <Link to={`/product/${product.id}`}>Detail </Link> {"|"}*/}
+
+                        {/*</p>*/}
 
                         <p className="product-star"
                            style={{
